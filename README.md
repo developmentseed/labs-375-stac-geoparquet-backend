@@ -1,5 +1,7 @@
 # stac-geoparquet API backend
 
+[![CI](https://github.com/developmentseed/labs-375-stac-geoparquet-backend/actions/workflows/ci.yml/badge.svg)](https://github.com/developmentseed/labs-375-stac-geoparquet-backend/actions/workflows/ci.yml)
+
 We're going to build a service that searches a [stac-geoparquet](https://github.com/stac-utils/stac-geoparquet) file with a [STAC API item search query](https://api.stacspec.org/v1.0.0/item-search/), and compare its performance to the same service backed by [pgstac](https://github.com/stac-utils/pgstac) and [ElasticSearch](https://www.elastic.co/elasticsearch).
 
 ## Core assumptions
