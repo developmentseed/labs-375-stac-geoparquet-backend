@@ -47,6 +47,22 @@ graph TD
 [Milestones](https://github.com/developmentseed/labs-375-stac-geoparquet-backend/milestones) are checkpoints and are used to group phases.
 Bugs and one-off tasks can live outside of the hierarchy.
 
+## Developing
+
+Get [yarn](https://yarnpkg.com/getting-started/install), then:
+
+```shell
+git clone git@github.com:developmentseed/labs-375-stac-geoparquet-backend.git
+cd labs-375-stac-geoparquet-backend
+scripts/install
+```
+
+To lint:
+
+```shell
+scripts/lint
+```
+
 ## Resources
 
 - [Issue 1](https://github.com/developmentseed/labs-375-stac-geoparquet-backend/issues/6)
