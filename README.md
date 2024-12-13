@@ -4,6 +4,22 @@
 
 We're building a service to search [stac-geoparquet](https://github.com/stac-utils/stac-geoparquet) with a STAC API [query](https://api.stacspec.org/v1.0.0/item-search/).
 
+## Developing
+
+Get [yarn](https://yarnpkg.com/getting-started/install), then:
+
+```shell
+git clone git@github.com:developmentseed/labs-375-stac-geoparquet-backend.git
+cd labs-375-stac-geoparquet-backend
+scripts/install
+```
+
+To lint:
+
+```shell
+scripts/lint
+```
+
 ## Core assumptions
 
 - Everything we build should either be in this repo or in an already-existing one ... we shouldn't stand up any new repos.
@@ -46,22 +62,6 @@ graph TD
 
 [Milestones](https://github.com/developmentseed/labs-375-stac-geoparquet-backend/milestones) are checkpoints and are used to group phases.
 Bugs and one-off tasks can live outside of the hierarchy.
-
-## Developing
-
-Get [yarn](https://yarnpkg.com/getting-started/install), then:
-
-```shell
-git clone git@github.com:developmentseed/labs-375-stac-geoparquet-backend.git
-cd labs-375-stac-geoparquet-backend
-scripts/install
-```
-
-To lint:
-
-```shell
-scripts/lint
-```
 
 ## Resources
 
