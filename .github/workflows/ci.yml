@@ -7,12 +7,15 @@ on:
   pull_request:
 
 jobs:
-  lint:
-    name: Lint
+  lint-and-test:
+    name: Lint and test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
       - name: Install
-        run: scripts/install
+        run: scripts/install --dev
       - name: Lint
         run: scripts/lint
+      - name: Test
+        run: scripts/test

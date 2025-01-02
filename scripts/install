@@ -1,5 +1,9 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 set -e
 
-yarn install
+uv sync
+
+if [ "$1" == "--dev" ]; then
+    yarn install
+fi
