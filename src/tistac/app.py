@@ -9,7 +9,7 @@ from .search import GetSearch, Search
 from .settings import Settings
 
 
-def build(settings: Settings | None = None) -> FastAPI:
+async def build(settings: Settings | None = None) -> FastAPI:
     """Builds a new TiStac application."""
 
     if settings is None:
@@ -18,7 +18,7 @@ def build(settings: Settings | None = None) -> FastAPI:
     async def get_settings() -> Settings:
         return settings
 
-    backend = settings.get_backend()
+    backend = await settings.get_backend()
 
     async def get_backend() -> Backend:
         return backend
