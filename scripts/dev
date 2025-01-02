@@ -2,4 +2,4 @@
 
 set -e
 
-uv run fastapi dev
+TISTAC_BACKEND=data/naip.parquet uv run fastapi dev
