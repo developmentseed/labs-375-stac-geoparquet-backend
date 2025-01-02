@@ -6,7 +6,7 @@ We're building a service to search [stac-geoparquet](https://github.com/stac-uti
 
 ## Developing
 
-Get [yarn](https://yarnpkg.com/getting-started/install), then:
+Get [uv](https://docs.astral.sh/uv/getting-started/installation/) and [yarn](https://yarnpkg.com/getting-started/install), then:
 
 ```shell
 git clone git@github.com:developmentseed/labs-375-stac-geoparquet-backend.git

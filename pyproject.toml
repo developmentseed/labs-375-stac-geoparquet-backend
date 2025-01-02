@@ -1,0 +1,21 @@
+[project]
+name = "tistac"
+version = "0.1.0"
+description = "A small multi-backend STAC API server built on FastAPI."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
+
+[dependency-groups]
+dev = ["mypy>=1.14.1", "pytest>=8.3.4", "ruff>=0.8.5"]
+
+[tool.mypy]
+strict = true
+files = ["**/*.py"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

@@ -2,5 +2,4 @@
 
 set -e
 
-uv sync
-yarn install
+uv run pytest
