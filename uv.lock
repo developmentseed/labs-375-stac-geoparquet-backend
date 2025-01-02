@@ -373,6 +373,19 @@ wheels = [
 ]
 
 [[package]]
+name = "pydantic-settings"
+version = "2.7.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pydantic" },
+    { name = "python-dotenv" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/73/7b/c58a586cd7d9ac66d2ee4ba60ca2d241fa837c02bca9bea80a9a8c3d22a9/pydantic_settings-2.7.1.tar.gz", hash = "sha256:10c9caad35e64bfb3c2fbf70a078c0e25cc92499782e5200747f942a065dec93", size = 79920 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b4/46/93416fdae86d40879714f72956ac14df9c7b76f7d41a4d68aa9f71a0028b/pydantic_settings-2.7.1-py3-none-any.whl", hash = "sha256:590be9e6e24d06db33a4262829edef682500ef008565a969c73d39d5f8bfb3fd", size = 29718 },
+]
+
+[[package]]
 name = "pygments"
 version = "2.18.0"
 source = { registry = "https://pypi.org/simple" }
@@ -523,6 +536,24 @@ wheels = [
 ]
 
 [[package]]
+name = "stacrs"
+version = "0.3.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/60/c0/cf94a072855a032f1bb2a9131f125a38a2d5e010e1de68c49615f8eb2208/stacrs-0.3.0.tar.gz", hash = "sha256:0b321137b06a7a6be118d81a5dac01657252ed3f5c3c6b0f20f30ad10cd27a96", size = 462646 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/87/98/fe05b97df5e6355921000d30391a0e70a50b2a75883ad4c20779e988ae74/stacrs-0.3.0-cp312-cp312-macosx_10_12_x86_64.whl", hash = "sha256:812cd58187a7eb1556338d501b784a68d2eb83995bc9c24034d29ae77e991d36", size = 17827857 },
+    { url = "https://files.pythonhosted.org/packages/c3/b8/773dca315918e5f8496718726f20aaa2a3fde19a82b8e4f128c49aad483e/stacrs-0.3.0-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:002eda619c5e7935587ab30d6247b4cdb602a28998dcfe9a2c5b12114e88b5e3", size = 16113023 },
+    { url = "https://files.pythonhosted.org/packages/ed/d3/1da809f0bfcf6fcb11a0fe9c147a7efa76139019d4f3f16ecf45d4efe99a/stacrs-0.3.0-cp312-cp312-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:91a2d89d2653a38072ad6498e4950a8f0216c1fc64edc240bdaa397f368e192e", size = 20213202 },
+    { url = "https://files.pythonhosted.org/packages/3d/f2/9bf133f109f78fb026bfde45f5afd1ebddf8655c552144b9044d8e5bb6d0/stacrs-0.3.0-cp312-cp312-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:76137fba3735ada863c3ed67c24d7f65f3bcac1e1b90e2990e14f35b2108feb1", size = 23852986 },
+    { url = "https://files.pythonhosted.org/packages/45/b1/7dd82838584dc5cfd650f0345f1bc6e12729224fff11eeb33a0ed735956d/stacrs-0.3.0-cp312-cp312-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:b46f5303b63b1d066e97deabdd198b5e2f86dfdbfcfceaf5e82603e852fcde49", size = 21937587 },
+    { url = "https://files.pythonhosted.org/packages/4a/11/772d58bb348f454c423ffbe3c2c88099ba4c8847c002c1c4e29d42fd56ee/stacrs-0.3.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:e4987958f729048b3fa4b406257975edc7493de198239e51b46b2409e5e23faa", size = 21851352 },
+    { url = "https://files.pythonhosted.org/packages/29/1f/dc80c6e788734e9eb494d5e1a1ed33e4c66e735147d3833ae131cf8619a3/stacrs-0.3.0-cp312-cp312-musllinux_1_2_aarch64.whl", hash = "sha256:af6f9df5d44890e87e1235e4f35a67b623204ee3327e94b0f1987e5f83c514f0", size = 27117735 },
+    { url = "https://files.pythonhosted.org/packages/27/8e/23ea12e24b2d646f15f40cdaae5301f3befb4dd04ab5f08909b76ab74982/stacrs-0.3.0-cp312-cp312-musllinux_1_2_armv7l.whl", hash = "sha256:783335d974e006ae9ad9c4c37b1210e0f84c7df579a8de9db2815c996cd8637d", size = 26926327 },
+    { url = "https://files.pythonhosted.org/packages/9a/0e/6e8dae9d947abb4bf92f6af3d0f042988019b81a73fd516db2bcb88722e9/stacrs-0.3.0-cp312-cp312-musllinux_1_2_i686.whl", hash = "sha256:52b7cd19e7f28579832164e57f59c9244497338ee55ef6fa0614ffb4febfd87c", size = 29306059 },
+    { url = "https://files.pythonhosted.org/packages/3c/98/517d76434579eac0c62a65b8faa34630229a71c18c400d7cbcdddff64b79/stacrs-0.3.0-cp312-cp312-musllinux_1_2_x86_64.whl", hash = "sha256:d737dfa8ba3fe692705d20936567ecd6321b5236507ff127532e181a20d85f86", size = 27945785 },
+]
+
+[[package]]
 name = "starlette"
 version = "0.41.3"
 source = { registry = "https://pypi.org/simple" }
@@ -541,6 +572,8 @@ source = { editable = "." }
 dependencies = [
     { name = "fastapi", extra = ["standard"] },
     { name = "pydantic" },
+    { name = "pydantic-settings" },
+    { name = "stacrs" },
 ]
 
 [package.dev-dependencies]
@@ -555,6 +588,8 @@ dev = [
 requires-dist = [
     { name = "fastapi", extras = ["standard"], specifier = ">=0.115.6" },
     { name = "pydantic", specifier = ">=2.10.4" },
+    { name = "pydantic-settings", specifier = ">=2.7.1" },
+    { name = "stacrs", specifier = ">=0.3.0" },
 ]
 
 [package.metadata.requires-dev]
