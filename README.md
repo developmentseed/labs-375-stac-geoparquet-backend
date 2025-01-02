@@ -4,9 +4,9 @@
 
 We're building a service to search [stac-geoparquet](https://github.com/stac-utils/stac-geoparquet) with a STAC API [query](https://api.stacspec.org/v1.0.0/item-search/).
 
-## Developing
+## Usage
 
-Get [uv](https://docs.astral.sh/uv/getting-started/installation/) and [yarn](https://yarnpkg.com/getting-started/install), then:
+Get [uv](https://docs.astral.sh/uv/getting-started/installation/)
 
 ```shell
 git clone git@github.com:developmentseed/labs-375-stac-geoparquet-backend.git
@@ -14,10 +14,33 @@ cd labs-375-stac-geoparquet-backend
 scripts/install
 ```
 
-To lint:
+Then:
 
 ```shell
-scripts/lint
+scripts/dev
+```
+
+This will start the server on <http://127.0.0.1:8000/>.
+
+## Developing
+
+Get [yarn](https://yarnpkg.com/getting-started/install), then:
+
+```shell
+scripts/install --dev
+```
+
+Run the test suite:
+
+```shell
+scripts/test
+```
+
+To format or lint:
+
+```shell
+scripts/format # Fixes things
+scripts/lint   # Doesn't fix things
 ```
 
 ## Core assumptions

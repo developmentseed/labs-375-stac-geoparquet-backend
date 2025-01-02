@@ -4,14 +4,20 @@ version = "0.1.0"
 description = "A small multi-backend STAC API server built on FastAPI."
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "fastapi[standard]>=0.115.6",
+    "pydantic>=2.10.4",
+]
 
 [dependency-groups]
-dev = ["mypy>=1.14.1", "pytest>=8.3.4", "ruff>=0.8.5"]
+dev = ["mypy>=1.14.1", "pytest>=8.3.4", "pytest-asyncio>=0.25.1", "ruff>=0.8.5"]
 
 [tool.mypy]
 strict = true
 files = ["**/*.py"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
 
 [tool.ruff.lint]
 select = ["E", "F", "I"]

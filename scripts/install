@@ -3,4 +3,7 @@
 set -e
 
 uv sync
-yarn install
+
+if [ "$1" == "--dev" ]; then
+    yarn install
+fi
