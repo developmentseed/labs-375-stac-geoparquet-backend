@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
-from .item_collection import ItemCollection
-from .search import Search
+from tistac.models.item_collection import ItemCollection
+from tistac.models.search import Search
 
 
 class Backend(ABC):
