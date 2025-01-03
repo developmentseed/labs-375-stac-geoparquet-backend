@@ -1,15 +1,16 @@
 import stacrs
 from pystac import Collection as PystacCollection
 from pystac import Extent, Item
+from stacrs import DuckdbClient
 
 from tistac.backends import Backend
-from tistac.models import Collection, ItemCollection, Search
+from tistac.models import Collection, ItemCollection, Link, Search
 
 
 class StacGeoparquetBackend(Backend):
     """A stac-geoparquet backend, using DuckDB under the hood."""
 
-    def __init__(self, href: str):
+    def __init__(self, href: str, base_url: str):
         # TODO support multiple collections
         # TODO store collection information in the **stac-geoparquet**
         items_as_dicts = stacrs.search(href)
@@ -35,6 +36,8 @@ class StacGeoparquetBackend(Backend):
         d["stac_version"] = "1.1.0"
         self.collections = [Collection.model_validate(d)]
         self.href = href
+        self.base_url = base_url
+        self.client = DuckdbClient()
 
     async def get_collections(self) -> list[Collection]:
         return self.collections
@@ -43,5 +46,27 @@ class StacGeoparquetBackend(Backend):
         return next((c for c in self.collections if c.id == collection_id), None)
 
     async def search(self, search: Search) -> ItemCollection:
-        items = stacrs.search(self.href, limit=search.limit)
-        return ItemCollection(features=items)
+        item_collection = self.client.search(self.href, **search.model_dump())
+        number_returned = len(item_collection["features"])
+        assert search.limit, "Search should always have a limit at this point"
+        links = []
+        if number_returned >= search.limit:
+            links.append(
+                self.next_link(
+                    search.limit,
+                    search.offset or 0,
+                    number_returned,
+                )
+            )
+        item_collection["numberReturned"] = number_returned
+        item_collection["links"] = links
+        return ItemCollection.model_validate(item_collection)
+
+    def next_link(self, limit: int, offset: int, num_items: int) -> Link:
+        # TODO support POST
+        return Link(
+            rel="next",
+            type="application/geo+json",
+            href=self.base_url + f"search?limit={limit}&offset={offset + num_items}",
+            method="GET",
+        )

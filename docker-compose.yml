@@ -21,6 +21,8 @@ services:
     build: .
     environment:
       - TISTAC_BACKEND=postgresql://username:password@pgstac:5432/pgstac
+      - TISTAC_CATALOG_ID=tistac-pgstac
+      - TISTAC_CATALOG_DESCRIPTION="tistac with a pgstac backend"
       - UVICORN_HOST=0.0.0.0
       - UVICORN_PORT=8000
     ports:
@@ -33,6 +35,8 @@ services:
     build: .
     environment:
       - TISTAC_BACKEND=/app/data/naip.parquet
+      - TISTAC_CATALOG_ID=tistac-stac-geoparquet
+      - TISTAC_CATALOG_DESCRIPTION="tistac with a stac-geoparquet backend"
       - UVICORN_HOST=0.0.0.0
       - UVICORN_PORT=8001
     ports:

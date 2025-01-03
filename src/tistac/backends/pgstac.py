@@ -10,8 +10,9 @@ class PgstacBackend(Backend):
     """A PgSTAC backend."""
 
     @classmethod
-    async def open(cls, dsn: str) -> PgstacBackend:
+    async def open(cls, dsn: str, base_url: str) -> PgstacBackend:
         client = await Client.open(dsn)
+        await client.set_setting("base_url", base_url)
         return PgstacBackend(client)
 
     def __init__(self, client: Client) -> None:
@@ -29,5 +30,5 @@ class PgstacBackend(Backend):
             return None
 
     async def search(self, search: Search) -> ItemCollection:
-        item_collection = await self.client.search(limit=search.limit)
+        item_collection = await self.client.search(**search.model_dump())
         return ItemCollection.model_validate(item_collection)
