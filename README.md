@@ -6,12 +6,13 @@ We're building a service to search [stac-geoparquet](https://github.com/stac-uti
 
 ## Usage
 
-Get [uv](https://docs.astral.sh/uv/getting-started/installation/)
+Get [uv](https://docs.astral.sh/uv/getting-started/installation/), then:
 
 ```shell
 git clone git@github.com:developmentseed/labs-375-stac-geoparquet-backend.git
 cd labs-375-stac-geoparquet-backend
 scripts/install
+cp .env.local .env
 ```
 
 Then:
