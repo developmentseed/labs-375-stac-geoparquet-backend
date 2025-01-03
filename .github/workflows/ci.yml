@@ -17,6 +17,8 @@ jobs:
         run: sudo apt-get install postgis
       - name: Install
         run: scripts/install --dev
+      - name: Copy env file
+        run: cp .env.local .env
       - name: Lint
         run: scripts/lint
       - name: Test
