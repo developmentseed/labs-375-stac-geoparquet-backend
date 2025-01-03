@@ -8,10 +8,13 @@ from tistac.models.search import Search
 class Settings(BaseSettings):
     """TiStac settings."""
 
-    model_config = SettingsConfigDict(env_prefix="tistac_")
+    model_config = SettingsConfigDict(env_prefix="tistac_", env_file=".env")
 
     backend: str
     default_limit: int = Field(default=DEFAULT_LIMIT)
+    catalog_id: str
+    catalog_title: str | None = Field(default=None)
+    catalog_description: str
 
     def update_search(self, search: Search) -> Search:
         """Updates a search with some default settings."""

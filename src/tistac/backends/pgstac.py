@@ -3,8 +3,7 @@ from __future__ import annotations
 from pgstacrs import Client
 
 from tistac.backends import Backend
-from tistac.models.item_collection import ItemCollection
-from tistac.models.search import Search
+from tistac.models import Collection, ItemCollection, Search
 
 
 class PgstacBackend(Backend):
@@ -17,6 +16,17 @@ class PgstacBackend(Backend):
 
     def __init__(self, client: Client) -> None:
         self.client = client
+
+    async def get_collections(self) -> list[Collection]:
+        return [
+            Collection.model_validate(d) for d in await self.client.all_collections()
+        ]
+
+    async def get_collection(self, collection_id: str) -> Collection | None:
+        if d := await self.client.get_collection(collection_id):
+            return Collection.model_validate(d)
+        else:
+            return None
 
     async def search(self, search: Search) -> ItemCollection:
         item_collection = await self.client.search(limit=search.limit)

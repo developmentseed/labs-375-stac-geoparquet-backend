@@ -44,6 +44,7 @@ async def pgstac(pgstac_proc: PostgreSQLExecutor) -> AsyncIterator[PostgreSQLExe
 async def client(
     request: FixtureRequest, pgstac: PostgreSQLExecutor
 ) -> AsyncIterator[TestClient]:
+    import tistac.dependencies
     from tistac.main import app
 
     if request.param == "stac-geoparquet":
@@ -69,6 +70,9 @@ async def client(
                     backend=f"postgresql://{database_janitor.user}:{database_janitor.password}@{database_janitor.host}:{database_janitor.port}/{database_janitor.dbname}"
                 )
 
+            # We need to reset the connection pool for pgstac
+            if "pgstac" in tistac.dependencies.BACKEND:
+                del tistac.dependencies.BACKEND["pgstac"]
             app.dependency_overrides[get_settings] = get_settings_override
             yield TestClient(app)
     else:

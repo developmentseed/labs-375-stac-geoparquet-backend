@@ -9,16 +9,30 @@ from tistac.backends.pgstac import PgstacBackend
 from tistac.backends.stac_geoparquet import StacGeoparquetBackend
 from tistac.settings import Settings
 
+BACKEND: dict[str, Backend] = {}
+
 
 @lru_cache
 def get_settings() -> Settings:
-    return Settings()  # type: ignore
+    return Settings()
 
 
+# I really don't like how this works -- we might want to go back to leaning on
+# the starlette state, like stac-fastapi-pgstac does. It's just tricky to
+# configure settings w/o using the dependency overrides.
 async def get_backend(settings: Annotated[Settings, Depends(get_settings)]) -> Backend:
-    # TODO share the pgstac connection pool
+    global BACKEND
+
     url = urllib.parse.urlparse(settings.backend)
     if url.scheme == "postgresql":
-        return await PgstacBackend.open(settings.backend)
+        if "pgstac" in BACKEND:
+            return BACKEND["pgstac"]
+        else:
+            BACKEND["pgstac"] = await PgstacBackend.open(settings.backend)
+            return BACKEND["pgstac"]
     else:
-        return StacGeoparquetBackend(settings.backend)
+        if "stac-geoparquet" in BACKEND:
+            return BACKEND["stac-geoparquet"]
+        else:
+            BACKEND["stac-geoparquet"] = StacGeoparquetBackend(settings.backend)
+            return BACKEND["stac-geoparquet"]
