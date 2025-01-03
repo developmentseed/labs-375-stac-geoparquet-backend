@@ -13,11 +13,10 @@ from pytest_postgresql import factories
 from pytest_postgresql.executor import PostgreSQLExecutor
 from pytest_postgresql.janitor import DatabaseJanitor
 
-import tistac.app
 from tistac import Settings
+from tistac.dependencies import get_settings
 
 naip_items = Path(__file__).parents[1] / "data" / "naip.parquet"
-
 pgstac_proc = factories.postgresql_proc()
 
 
@@ -45,9 +44,15 @@ async def pgstac(pgstac_proc: PostgreSQLExecutor) -> AsyncIterator[PostgreSQLExe
 async def client(
     request: FixtureRequest, pgstac: PostgreSQLExecutor
 ) -> AsyncIterator[TestClient]:
+    from tistac.main import app
+
     if request.param == "stac-geoparquet":
-        settings = Settings(backend=str(naip_items))
-        yield TestClient(await tistac.app.build(settings))
+
+        def get_settings_override() -> Settings:
+            return Settings(backend=str(naip_items))
+
+        app.dependency_overrides[get_settings] = get_settings_override
+        yield TestClient(app)
     elif request.param == "pgstac":
         with DatabaseJanitor(
             user=pgstac.user,
@@ -58,9 +63,13 @@ async def client(
             dbname="pypgstac_test",
             template_dbname=pgstac.template_dbname,
         ) as database_janitor:
-            settings = Settings(
-                backend=f"postgresql://{database_janitor.user}:{database_janitor.password}@{database_janitor.host}:{database_janitor.port}/{database_janitor.dbname}"
-            )
-            yield TestClient(await tistac.app.build(settings))
+
+            def get_settings_override() -> Settings:
+                return Settings(
+                    backend=f"postgresql://{database_janitor.user}:{database_janitor.password}@{database_janitor.host}:{database_janitor.port}/{database_janitor.dbname}"
+                )
+
+            app.dependency_overrides[get_settings] = get_settings_override
+            yield TestClient(app)
     else:
         raise Exception(f"Unknown backend type: {request.param}")

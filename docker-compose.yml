@@ -1,0 +1,41 @@
+services:
+  pgstac:
+    container_name: pgstac
+    image: ghcr.io/stac-utils/pgstac:v0.9.1
+    environment:
+      - POSTGRES_USER=username
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=pgstac
+      - PGUSER=username
+      - PGPASSWORD=password
+      - PGDATABASE=pgstac
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-d", "pgstac"]
+      interval: 1s
+      timeout: 20s
+      retries: 20
+  tistac-pgstac:
+    container_name: tistac-pgstac
+    build: .
+    environment:
+      - TISTAC_BACKEND=postgresql://username:password@pgstac:5432/pgstac
+      - UVICORN_HOST=0.0.0.0
+      - UVICORN_PORT=8000
+    ports:
+      - 8000:8000
+    depends_on:
+      pgstac:
+        condition: service_healthy
+  tistac-stac-fastapi:
+    container_name: tistac-stac-fastapi
+    build: .
+    environment:
+      - TISTAC_BACKEND=/app/data/naip.parquet
+      - UVICORN_HOST=0.0.0.0
+      - UVICORN_PORT=8001
+    ports:
+      - 8001:8001
+    volumes:
+      - ./data:/app/data

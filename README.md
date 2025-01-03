@@ -20,7 +20,15 @@ Then:
 scripts/dev
 ```
 
-This will start the server on <http://127.0.0.1:8000/>.
+This will start the **stac-fastapi** server on <http://127.0.0.1:8000/>.
+
+To start both a **pgstac** and **stac-fastapi** server:
+
+```shell
+docker compose up
+```
+
+This will start **pgstac** on <http://127.0.0.1:8000> and **stac-fastapi** on <http://127.0.0.1:8001>.
 
 ## Developing
 

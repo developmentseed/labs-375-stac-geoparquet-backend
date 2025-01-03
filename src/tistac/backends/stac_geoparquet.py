@@ -1,8 +1,8 @@
 import stacrs
 
-from .backend import Backend
-from .item_collection import ItemCollection
-from .search import Search
+from tistac.backends import Backend
+from tistac.models.item_collection import ItemCollection
+from tistac.models.search import Search
 
 
 class StacGeoparquetBackend(Backend):
