@@ -898,7 +898,7 @@ wheels = [
 [[package]]
 name = "stacrs"
 version = "0.3.0"
-source = { git = "https://github.com/gadomski/stacrs.git#f0e83e75d0d6f10f7d7e6f51d8b6f8f20074ceea" }
+source = { git = "https://github.com/gadomski/stacrs.git#1530e4a37d3725ab97c9ad603fc7a67d5adc4b9d" }
 
 [[package]]
 name = "starlette"
