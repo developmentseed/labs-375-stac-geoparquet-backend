@@ -80,7 +80,7 @@ async def get_collection(
         )
 
 
-@router.get("/search", tags=["search"])
+@router.get("/search", tags=["search"], response_model_exclude_none=True)
 async def get_search(
     get_search: Annotated[GetSearch, Query()],
     backend: Annotated[Backend, Depends(get_backend)],
@@ -88,16 +88,16 @@ async def get_search(
 ) -> ItemCollection:
     """Searches this STAC API via a GET request."""
     search = get_search.into_search()
-    search = settings.update_search(search)
+    search = search.with_settings(settings)
     return await backend.search(search)
 
 
-@router.post("/search", tags=["search"])
+@router.post("/search", tags=["search"], response_model_exclude_none=True)
 async def post_search(
     search: Search,
     backend: Annotated[Backend, Depends(get_backend)],
     settings: Annotated[Settings, Depends(get_settings)],
 ) -> ItemCollection:
     """Searches this STAC API via a POST request."""
-    search = settings.update_search(search)
+    search = search.with_settings(settings)
     return await backend.search(search)

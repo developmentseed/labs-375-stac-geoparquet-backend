@@ -31,6 +31,23 @@ docker compose up
 
 This will start **pgstac** on <http://127.0.0.1:8000> and **stac-fastapi** on <http://127.0.0.1:8001>.
 
+### **pgstac**
+
+Right now we don't auto-load data to **pgstac**.
+To populate the **pgstac** database, `uv pip install stacrs-cli` and make sure you've got `docker compose up`, then:
+
+```shell
+curl http://localhost:8001/collections/naip  | pypgstac --dsn postgresql://username:password@localhost:5432/pgstac load collections stdin
+stacrs translate data/naip.parquet | jq -c '.features.[]' | pypgstac --dsn postgresql://username:password@localhost:5432/pgstac load items stdin
+```
+
+To run just the **pgstac** dev server:
+
+```shell
+docker compose up -d pgstac
+TISTAC_BACKEND=postgresql://username:password@localhost:5432/pgstac fastapi dev src/tistac/main.py
+```
+
 ## Developing
 
 Get [yarn](https://yarnpkg.com/getting-started/install), then:
