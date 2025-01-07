@@ -51,17 +51,20 @@ class Client(AsyncBaseCoreClient):  # type: ignore
         limit: int | None = 10,
         **kwargs: Any,
     ) -> ItemCollection:
-        item_collection = request.app.state.client.search(
-            request.app.state.href,
-            ids=ids,
+        search_request = BaseSearchPostRequest(
             collections=collections,
+            ids=ids,
             bbox=bbox,
             intersects=intersects,
             datetime=datetime,
             limit=limit,
+        )
+        self.search(
+            self,
+            search_request=search_request,
+            request=request,
             **kwargs,
         )
-        return ItemCollection(**item_collection)
 
     async def item_collection(
         self,
@@ -73,18 +76,20 @@ class Client(AsyncBaseCoreClient):  # type: ignore
         offset: int = 0,
         **kwargs: Any,
     ) -> ItemCollection:
-        item_collection = request.app.state.client.search(
-            request.app.state.href,
-            bbox=bbox,
-            datetime=datetime,
-            limit=limit,
-            offset=offset,
-            **kwargs,
+        search_request = BaseSearchPostRequest(
+            bbox=bbox, datetime=datetime, limit=limit, offset=offset
         )
-        return ItemCollection(**item_collection)
+        return self.search(search_request=search_request, request=request, **kwargs)
 
     async def post_search(
         self, search_request: BaseSearchPostRequest, *, request: Request, **kwargs: Any
+    ) -> ItemCollection:
+        return await self.search(
+            search_request=search_request, request=request, **kwargs
+        )
+
+    async def search(
+        self, *, search_request: BaseSearchPostRequest, request: Request, **kwargs
     ) -> ItemCollection:
         search = search_request.model_dump()
         search.update(**kwargs)

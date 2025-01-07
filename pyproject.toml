@@ -1,5 +1,5 @@
 [project]
-name = "stac-fastapi.geoparquet"
+name = "stac-fastapi-geoparquet"
 version = "0.1.0"
 description = "stac-geoparquet backend for stac-fastapi"
 readme = "README.md"
