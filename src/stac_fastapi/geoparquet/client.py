@@ -1,12 +1,14 @@
+import copy
+import urllib.parse
 from typing import Any
 
 from geojson_pydantic.geometries import Geometry
 from starlette.requests import Request
 
+from stac_fastapi.api.models import BaseSearchPostRequest
 from stac_fastapi.types.core import AsyncBaseCoreClient
 from stac_fastapi.types.errors import NotFoundError
 from stac_fastapi.types.rfc3339 import DateTimeType
-from stac_fastapi.types.search import BaseSearchPostRequest
 from stac_fastapi.types.stac import BBox, Collection, Collections, Item, ItemCollection
 
 
@@ -30,7 +32,7 @@ class Client(AsyncBaseCoreClient):  # type: ignore
         self, *, request: Request, item_id: str, collection_id: str, **kwargs: Any
     ) -> Item:
         item_collection = request.app.state.client.search(
-            request.app.state.href, ids=[item_id], collections=[collection_id]
+            request.app.state.href, ids=[item_id], collections=[collection_id], **kwargs
         )
         if len(item_collection["features"]) == 1:
             return Item(**item_collection["features"][0])
@@ -49,9 +51,10 @@ class Client(AsyncBaseCoreClient):  # type: ignore
         intersects: Geometry | None = None,
         datetime: DateTimeType | None = None,
         limit: int | None = 10,
-        **kwargs: Any,
+        offset: int | None = 0,
+        **kwargs,
     ) -> ItemCollection:
-        search_request = BaseSearchPostRequest(
+        search = BaseSearchPostRequest(
             collections=collections,
             ids=ids,
             bbox=bbox,
@@ -59,11 +62,8 @@ class Client(AsyncBaseCoreClient):  # type: ignore
             datetime=datetime,
             limit=limit,
         )
-        self.search(
-            self,
-            search_request=search_request,
-            request=request,
-            **kwargs,
+        return await self.search(
+            request=request, search=search, offset=offset, **kwargs
         )
 
     async def item_collection(
@@ -74,27 +74,70 @@ class Client(AsyncBaseCoreClient):  # type: ignore
         datetime: DateTimeType | None = None,
         limit: int = 10,
         offset: int = 0,
-        **kwargs: Any,
+        **kwargs,
     ) -> ItemCollection:
-        search_request = BaseSearchPostRequest(
+        search = BaseSearchPostRequest(
             bbox=bbox, datetime=datetime, limit=limit, offset=offset
         )
-        return self.search(search_request=search_request, request=request, **kwargs)
+        return await self.search(request=request, search=search, **kwargs)
 
     async def post_search(
-        self, search_request: BaseSearchPostRequest, *, request: Request, **kwargs: Any
+        self, search_request: BaseSearchPostRequest, *, request: Request, **kwargs
     ) -> ItemCollection:
-        return await self.search(
-            search_request=search_request, request=request, **kwargs
-        )
+        return await self.search(search=search_request, request=request, **kwargs)
 
     async def search(
-        self, *, search_request: BaseSearchPostRequest, request: Request, **kwargs
+        self,
+        *,
+        request: Request,
+        search: BaseSearchPostRequest,
+        **kwargs,
     ) -> ItemCollection:
-        search = search_request.model_dump()
-        search.update(**kwargs)
+        search_dict = search.model_dump(exclude_none=True)
+        search_dict.update(**kwargs)
         item_collection = request.app.state.client.search(
             request.app.state.href,
-            **search,
+            **search_dict,
         )
+        num_items = len(item_collection["features"])
+        offset = int(search_dict.get("offset", None) or 0)
+
+        try:
+            limit = int(search_dict["limit"])
+            if limit > num_items:
+                limit = None
+        except KeyError:
+            limit = len(num_items)
+
+        if limit:
+            next_search = copy.deepcopy(search_dict)
+            next_search["limit"] = limit
+            next_search["offset"] = offset + limit
+        else:
+            next_search = None
+
+        links = []
+        url = request.url_for("Search")
+        if next_search:
+            if request.method == "GET":
+                links.append(
+                    {
+                        "href": str(url) + "?" + urllib.parse.urlencode(next_search),
+                        "rel": "next",
+                        "type": "application/geo+json",
+                        "method": "GET",
+                    }
+                )
+            else:
+                links.append(
+                    {
+                        "href": str(url),
+                        "rel": "next",
+                        "type": "application/geo+json",
+                        "method": "POST",
+                        "body": next_search,
+                    }
+                )
+
+        item_collection["links"] = links
         return ItemCollection(**item_collection)

@@ -8,6 +8,7 @@ dependencies = [
     "fastapi>=0.115.6",
     "geojson-pydantic>=1.2.0",
     "stac-fastapi-api>=3.0.0",
+    "stac-fastapi-extensions>=3.0.4",
     "stac-fastapi-types>=3.0.0",
     "stacrs>=0.3.0",
 ]
