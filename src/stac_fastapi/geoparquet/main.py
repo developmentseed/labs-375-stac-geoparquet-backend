@@ -32,8 +32,8 @@ PostSearch = stac_fastapi.api.models.create_request_model(
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     client = DuckdbClient()
-    collections = client.get_collections(settings.href)
-    app.state.href = settings.href
+    collections = client.get_collections(settings.stac_fastapi_geoparquet_href)
+    app.state.href = settings.stac_fastapi_geoparquet_href
     app.state.collections = collections
     app.state.client = client
     yield
