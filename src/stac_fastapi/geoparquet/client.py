@@ -52,7 +52,7 @@ class Client(AsyncBaseCoreClient):  # type: ignore
         datetime: DateTimeType | None = None,
         limit: int | None = 10,
         offset: int | None = 0,
-        **kwargs,
+        **kwargs: str,
     ) -> ItemCollection:
         search = BaseSearchPostRequest(
             collections=collections,
@@ -74,7 +74,7 @@ class Client(AsyncBaseCoreClient):  # type: ignore
         datetime: DateTimeType | None = None,
         limit: int = 10,
         offset: int = 0,
-        **kwargs,
+        **kwargs: str,
     ) -> ItemCollection:
         search = BaseSearchPostRequest(
             bbox=bbox, datetime=datetime, limit=limit, offset=offset
@@ -82,7 +82,7 @@ class Client(AsyncBaseCoreClient):  # type: ignore
         return await self.search(request=request, search=search, **kwargs)
 
     async def post_search(
-        self, search_request: BaseSearchPostRequest, *, request: Request, **kwargs
+        self, search_request: BaseSearchPostRequest, *, request: Request, **kwargs: Any
     ) -> ItemCollection:
         return await self.search(search=search_request, request=request, **kwargs)
 
@@ -91,7 +91,7 @@ class Client(AsyncBaseCoreClient):  # type: ignore
         *,
         request: Request,
         search: BaseSearchPostRequest,
-        **kwargs,
+        **kwargs: Any,
     ) -> ItemCollection:
         search_dict = search.model_dump(exclude_none=True)
         search_dict.update(**kwargs)
@@ -100,16 +100,10 @@ class Client(AsyncBaseCoreClient):  # type: ignore
             **search_dict,
         )
         num_items = len(item_collection["features"])
+        limit = int(search_dict.get("limit", None) or num_items)
         offset = int(search_dict.get("offset", None) or 0)
 
-        try:
-            limit = int(search_dict["limit"])
-            if limit > num_items:
-                limit = None
-        except KeyError:
-            limit = len(num_items)
-
-        if limit:
+        if limit <= num_items:
             next_search = copy.deepcopy(search_dict)
             next_search["limit"] = limit
             next_search["offset"] = offset + limit
