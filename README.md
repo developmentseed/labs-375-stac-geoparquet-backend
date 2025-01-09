@@ -21,32 +21,7 @@ Then:
 scripts/dev
 ```
 
-This will start the **stac-fastapi** server on <http://127.0.0.1:8000/>.
-
-To start both a **pgstac** and **stac-fastapi** server:
-
-```shell
-docker compose up
-```
-
-This will start **pgstac** on <http://127.0.0.1:8000> and **stac-fastapi** on <http://127.0.0.1:8001>.
-
-### **pgstac**
-
-Right now we don't auto-load data to **pgstac**.
-To populate the **pgstac** database, `uv pip install stacrs-cli` and make sure you've got `docker compose up`, then:
-
-```shell
-curl http://localhost:8001/collections/naip  | pypgstac --dsn postgresql://username:password@localhost:5432/pgstac load collections stdin
-stacrs translate data/naip.parquet | jq -c '.features.[]' | pypgstac --dsn postgresql://username:password@localhost:5432/pgstac load items stdin
-```
-
-To run just the **pgstac** dev server:
-
-```shell
-docker compose up -d pgstac
-TISTAC_BACKEND=postgresql://username:password@localhost:5432/pgstac fastapi dev src/tistac/main.py
-```
+This will start the **stac-fastapi-geoparquet** server on <http://127.0.0.1:8000/>.
 
 ## Developing
 
@@ -72,13 +47,10 @@ scripts/lint   # Doesn't fix things
 ## Core assumptions
 
 - Everything we build should either be in this repo or in an already-existing one ... we shouldn't stand up any new repos.
-- We're _not_ going to use [stac-fastapi](https://github.com/stac-utils/stac-fastapi) or [stac-fastapi-pgstac](https://github.com/stac-utils/stac-fastapi-pgstac).
-  We might end up porting over code or ideas later, but @gadomski wants this to be green-field.
 - We want to be public-by-default (with appropriate throttling) with all of our services.
   We want to show this off to the world, not keep it secret.
-- We'd like to use [stac-rs](https://github.com/stac-utils/stac-rs) (and its Python friends, [stacrs](https://github.com/gadomski/stacrs) and [pgstacrs](https://github.com/stac-utils/pgstacrs)) as much as possible.
+- We'd like to use [stac-rs](https://github.com/stac-utils/stac-rs) and its Python friend, [stacrs](https://github.com/gadomski/stacrs), as much as possible.
   This is partially a sop to @gadomski, but we think that the performance and reusability benefits of Rust will be part of what makes this project special.
-- APIs should be FastAPI, which is the de-facto standard here at Development Seed for good reason.
 
 ## Project management
 

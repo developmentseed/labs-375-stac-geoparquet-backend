@@ -1,38 +1,44 @@
 [project]
-name = "tistac"
+name = "stac-fastapi-geoparquet"
 version = "0.1.0"
-description = "A small multi-backend STAC API server built on FastAPI."
+description = "stac-geoparquet backend for stac-fastapi"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "fastapi[standard]>=0.115.6",
-    "pgstacrs>=0.1.0",
-    "pydantic>=2.10.4",
-    "pydantic-settings>=2.7.1",
-    "pystac>=1.11.0",
+    "fastapi>=0.115.6",
+    "geojson-pydantic>=1.2.0",
+    "stac-fastapi-api>=3.0.0",
+    "stac-fastapi-extensions>=3.0.4",
+    "stac-fastapi-types>=3.0.0",
     "stacrs>=0.3.0",
 ]
 
 [dependency-groups]
 dev = [
+    "fastapi[standard]>=0.115.6",
+    "httpx>=0.28.1",
     "mypy>=1.14.1",
-    "psycopg[pool]>=3.2.3",
-    "pypgstac>=0.9.2",
     "pystac[validation]>=1.11.0",
     "pytest>=8.3.4",
     "pytest-asyncio>=0.25.1",
-    "pytest-postgresql>=6.1.1",
-    "ruff>=0.8.5",
+    "ruff>=0.8.6",
 ]
+
+[tool.uv.sources]
+stacrs = { git = "https://github.com/gadomski/stacrs.git" }
 
 [tool.mypy]
 strict = true
 files = ["**/*.py"]
 plugins = "pydantic.mypy"
 
+[[tool.mypy.overrides]]
+module = ["stac_fastapi.*"]
+ignore_missing_imports = true
+
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
-asyncio_default_fixture_loop_scope = "session"
+asyncio_default_fixture_loop_scope = "function"
 filterwarnings = [
     "error",
     'ignore:datetime.datetime.utcfromtimestamp\(\) is deprecated and scheduled for removal in a future version.:DeprecationWarning',
@@ -41,10 +47,10 @@ filterwarnings = [
 [tool.ruff.lint]
 select = ["E", "F", "I"]
 
-[tool.uv.sources]
-pgstacrs = { git = "https://github.com/stac-utils/pgstacrs.git" }
-stacrs = { git = "https://github.com/gadomski/stacrs.git" }
-
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src/"]
+include = ["stac_fastapi.geoparquet"]
