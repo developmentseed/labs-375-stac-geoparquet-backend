@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+set -e
+
+href="http://127.0.0.1:8000"
+
+stac-api-validator --root-url "$href" \
+    --conformance core \
+    --conformance features \
+    --collection naip \
+    --geometry '{"type":"Point","coordinates":[-105.1019,40.1672]}'
