@@ -15,13 +15,13 @@ from .settings import Settings
 settings = Settings()
 
 
-GetSearch = stac_fastapi.api.models.create_request_model(
+GetSearchRequestModel = stac_fastapi.api.models.create_request_model(
     model_name="SearchGetRequest",
     base_model=BaseSearchGetRequest,
     mixins=[OffsetPaginationExtension().GET],
     request_type="GET",
 )
-PostSearch = stac_fastapi.api.models.create_request_model(
+PostSearchRequestModel = stac_fastapi.api.models.create_request_model(
     model_name="SearchPostRequest",
     base_model=BaseSearchPostRequest,
     mixins=[OffsetPaginationExtension().POST],
@@ -52,7 +52,7 @@ api = StacApi(
         docs_url=settings.docs_url,
         redoc_url=settings.docs_url,
     ),
-    search_get_request_model=GetSearch,
-    search_post_request_model=PostSearch,
+    search_get_request_model=GetSearchRequestModel,
+    search_post_request_model=PostSearchRequestModel,
 )
 app = api.app

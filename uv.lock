@@ -25,6 +25,15 @@ wheels = [
 ]
 
 [[package]]
+name = "attr"
+version = "0.3.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/e4/d2/d0a5e36049ec6f72f4951b7f843b359d21e5a208b120618686187234dd1d/attr-0.3.2.tar.gz", hash = "sha256:1ceebca768181cdcce9827611b1d728e592be5d293911539ea3d0b0bfa1146f4", size = 2649 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/68/eb/e96c25f5accb24b151c5a559961f29af2ef089725b547efb185985c73e10/attr-0.3.2-py2.py3-none-any.whl", hash = "sha256:4f4bffeea8c27387bde446675a7ac24f3b8fea1075f12d849b5f5c5181fc8336", size = 3267 },
+]
+
+[[package]]
 name = "attrs"
 version = "24.3.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1010,6 +1019,7 @@ name = "stac-fastapi-geoparquet"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "attr" },
     { name = "fastapi" },
     { name = "geojson-pydantic" },
     { name = "stac-fastapi-api" },
@@ -1032,6 +1042,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "attr", specifier = ">=0.3.2" },
     { name = "fastapi", specifier = ">=0.115.6" },
     { name = "geojson-pydantic", specifier = ">=1.2.0" },
     { name = "stac-fastapi-api", specifier = ">=3.0.0" },

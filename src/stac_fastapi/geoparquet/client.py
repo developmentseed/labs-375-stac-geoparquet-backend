@@ -1,8 +1,8 @@
 import copy
+import json
 import urllib.parse
 from typing import Any
 
-from geojson_pydantic.geometries import Geometry
 from starlette.requests import Request
 
 from stac_fastapi.api.models import BaseSearchPostRequest
@@ -64,22 +64,48 @@ class Client(AsyncBaseCoreClient):  # type: ignore
         collections: list[str] | None = None,
         ids: list[str] | None = None,
         bbox: BBox | None = None,
-        intersects: Geometry | None = None,
+        intersects: str | None = None,
         datetime: DateTimeType | None = None,
         limit: int | None = 10,
         offset: int | None = 0,
         **kwargs: str,
     ) -> ItemCollection:
+        if intersects:
+            maybe_intersects = json.loads(intersects)
+        else:
+            maybe_intersects = None
+
+        if datetime:
+            if isinstance(datetime, tuple):
+                assert len(datetime) == 2
+                if datetime[0]:
+                    maybe_datetime = datetime[0].isoformat()
+                else:
+                    maybe_datetime = ".."
+                maybe_datetime += "/"
+                if datetime[1]:
+                    maybe_datetime += datetime[1].isoformat()
+                else:
+                    maybe_datetime += ".."
+            else:
+                maybe_datetime = datetime.isoformat()
+        else:
+            maybe_datetime = None
+
         search = BaseSearchPostRequest(
             collections=collections,
             ids=ids,
             bbox=bbox,
-            intersects=intersects,
-            datetime=datetime,
+            intersects=maybe_intersects,
+            datetime=maybe_datetime,
             limit=limit,
         )
         return await self.search(
-            request=request, search=search, offset=offset, **kwargs
+            request=request,
+            search=search,
+            offset=offset,
+            url=str(request.url_for("Search")),
+            **kwargs,
         )
 
     async def item_collection(
@@ -110,7 +136,12 @@ class Client(AsyncBaseCoreClient):  # type: ignore
     async def post_search(
         self, search_request: BaseSearchPostRequest, *, request: Request, **kwargs: Any
     ) -> ItemCollection:
-        return await self.search(search=search_request, request=request, **kwargs)
+        return await self.search(
+            search=search_request,
+            request=request,
+            url=str(request.url_for("Search")),
+            **kwargs,
+        )
 
     async def search(
         self,

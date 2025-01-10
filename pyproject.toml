@@ -5,6 +5,7 @@ description = "stac-geoparquet backend for stac-fastapi"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "attr>=0.3.2",
     "fastapi>=0.115.6",
     "geojson-pydantic>=1.2.0",
     "stac-fastapi-api>=3.0.0",
