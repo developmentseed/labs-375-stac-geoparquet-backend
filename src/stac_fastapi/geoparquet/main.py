@@ -1,15 +1,15 @@
+from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
-from typing import AsyncIterator
 
 from fastapi import FastAPI
 from stacrs import DuckdbClient
 
 import stac_fastapi.api.models
 from stac_fastapi.api.app import StacApi
-from stac_fastapi.api.models import BaseSearchGetRequest, BaseSearchPostRequest
 from stac_fastapi.extensions.core.pagination import OffsetPaginationExtension
 
 from .client import Client
+from .search import SearchGetRequest, SearchPostRequest
 from .settings import Settings
 
 settings = Settings()
@@ -17,13 +17,13 @@ settings = Settings()
 
 GetSearchRequestModel = stac_fastapi.api.models.create_request_model(
     model_name="SearchGetRequest",
-    base_model=BaseSearchGetRequest,
+    base_model=SearchGetRequest,
     mixins=[OffsetPaginationExtension().GET],
     request_type="GET",
 )
 PostSearchRequestModel = stac_fastapi.api.models.create_request_model(
     model_name="SearchPostRequest",
-    base_model=BaseSearchPostRequest,
+    base_model=SearchPostRequest,
     mixins=[OffsetPaginationExtension().POST],
     request_type="POST",
 )

@@ -3,6 +3,8 @@ import json
 import urllib.parse
 from typing import Any
 
+from fastapi import HTTPException
+from pydantic import ValidationError
 from starlette.requests import Request
 
 from stac_fastapi.api.models import BaseSearchPostRequest
@@ -92,14 +94,18 @@ class Client(AsyncBaseCoreClient):  # type: ignore
         else:
             maybe_datetime = None
 
-        search = BaseSearchPostRequest(
-            collections=collections,
-            ids=ids,
-            bbox=bbox,
-            intersects=maybe_intersects,
-            datetime=maybe_datetime,
-            limit=limit,
-        )
+        try:
+            search = BaseSearchPostRequest(
+                collections=collections,
+                ids=ids,
+                bbox=bbox,
+                intersects=maybe_intersects,
+                datetime=maybe_datetime,
+                limit=limit,
+            )
+        except ValidationError as e:
+            raise HTTPException(400, f"invalid request: {e}")
+
         return await self.search(
             request=request,
             search=search,
