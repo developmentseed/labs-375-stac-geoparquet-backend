@@ -8,9 +8,9 @@ dependencies = [
     "attr>=0.3.2",
     "fastapi>=0.115.6",
     "geojson-pydantic>=1.2.0",
-    "stac-fastapi-api>=3.0.0",
-    "stac-fastapi-extensions>=3.0.4",
-    "stac-fastapi-types>=3.0.0",
+    "stac-fastapi-api>=3.0.5",
+    "stac-fastapi-extensions>=3.0.5",
+    "stac-fastapi-types>=3.0.5",
     "stacrs>=0.3.0",
 ]
 
@@ -22,9 +22,10 @@ dev = [
     "pystac[validation]>=1.11.0",
     "pytest>=8.3.4",
     "pytest-asyncio>=0.25.1",
-    "ruff>=0.8.6",
+    "ruff>=0.9.1",
     "stac-api-validator>=0.6.3",
 ]
+validate = ["stac-api-validator>=0.6.3"]
 
 [tool.uv.sources]
 stacrs = { git = "https://github.com/gadomski/stacrs.git" }
