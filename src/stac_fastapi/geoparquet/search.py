@@ -32,12 +32,16 @@ def str2list(x: str) -> list[str] | None:
 
 def str2bbox(x: str) -> BBox | None:
     if x:
+        x_as_list = str2list(x)
+        assert x_as_list  # we knew the x wasn't empty
+        if len(x_as_list) not in (4, 6):
+            raise HTTPException(
+                400, f"invalid bbox length (should be 4 or 6): {x_as_list}"
+            )
         try:
-            t = tuple(float(v) for v in str2list(x))
+            return tuple(float(v) for v in x_as_list)  # type: ignore
         except ValueError as e:
             raise HTTPException(400, f"invalid bbox: {e}")
-        else:
-            return t
     else:
         return None
 
@@ -53,7 +57,10 @@ def _collection_converter(
         ),
     ] = None,
 ) -> list[str] | None:
-    return str2list(val)
+    if val:
+        return str2list(val)
+    else:
+        return None
 
 
 def _ids_converter(
@@ -67,7 +74,10 @@ def _ids_converter(
         ),
     ] = None,
 ) -> list[str] | None:
-    return str2list(val)
+    if val:
+        return str2list(val)
+    else:
+        return None
 
 
 def _bbox_converter(
@@ -81,7 +91,10 @@ def _bbox_converter(
         ),
     ] = None,
 ) -> BBox | None:
-    return str2bbox(val)
+    if val:
+        return str2bbox(val)
+    else:
+        return None
 
 
 def _datetime_converter(
@@ -100,7 +113,7 @@ Either a date-time or an interval, open or closed. Date and time expressions adh
             },
         ),
     ] = None,
-):
+) -> DateTimeType | None:
     return str_to_interval(val)
 
 
@@ -110,7 +123,7 @@ Limit = Annotated[PositiveInt, AfterValidator(crop)]
 
 
 @attr.s
-class SearchGetRequest(APIRequest):
+class SearchGetRequest(APIRequest):  # type: ignore
     collections: list[str] | None = attr.ib(
         default=None, converter=_collection_converter
     )
