@@ -2,8 +2,10 @@
 
 set -e
 
-uv sync
 
 if [ "$1" == "--dev" ]; then
+    uv sync --all-groups
     yarn install
+else
+    uv sync --no-dev
 fi

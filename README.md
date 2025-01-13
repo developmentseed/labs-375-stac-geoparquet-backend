@@ -44,6 +44,12 @@ scripts/format # Fixes things
 scripts/lint   # Doesn't fix things
 ```
 
+To validate with [stac-api-validator](https://github.com/stac-utils/stac-api-validator):
+
+```shell
+scripts/validate
+```
+
 ## Core assumptions
 
 - Everything we build should either be in this repo or in an already-existing one ... we shouldn't stand up any new repos.

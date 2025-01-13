@@ -13,8 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
-      - name: Install postgis
-        run: sudo apt-get install postgis
       - name: Install
         run: scripts/install --dev
       - name: Copy env file
@@ -23,3 +21,5 @@ jobs:
         run: scripts/lint
       - name: Test
         run: scripts/test
+      - name: Validate
+        run: scripts/validate

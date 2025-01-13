@@ -1,8 +1,10 @@
 import copy
+import json
 import urllib.parse
 from typing import Any
 
-from geojson_pydantic.geometries import Geometry
+from fastapi import HTTPException
+from pydantic import ValidationError
 from starlette.requests import Request
 
 from stac_fastapi.api.models import BaseSearchPostRequest
@@ -16,7 +18,23 @@ class Client(AsyncBaseCoreClient):  # type: ignore
     """A stac-fastapi-geoparquet client."""
 
     async def all_collections(self, *, request: Request, **kwargs: Any) -> Collections:
-        return Collections(collections=request.app.state.collections)
+        return Collections(
+            collections=[
+                collection_with_links(c, request) for c in request.app.state.collections
+            ],
+            links=[
+                {
+                    "href": str(request.url_for("Landing Page")),
+                    "rel": "root",
+                    "type": "application/json",
+                },
+                {
+                    "href": str(request.url_for("Get Collections")),
+                    "rel": "self",
+                    "type": "application/json",
+                },
+            ],
+        )
 
     async def get_collection(
         self, *, request: Request, collection_id: str, **kwargs: Any
@@ -24,7 +42,7 @@ class Client(AsyncBaseCoreClient):  # type: ignore
         if collection := next(
             (c for c in request.app.state.collections if c["id"] == collection_id), None
         ):
-            return Collection(**collection)
+            return collection_with_links(collection, request)
         else:
             raise NotFoundError(f"Collection does not exist: {collection_id}")
 
@@ -48,28 +66,59 @@ class Client(AsyncBaseCoreClient):  # type: ignore
         collections: list[str] | None = None,
         ids: list[str] | None = None,
         bbox: BBox | None = None,
-        intersects: Geometry | None = None,
+        intersects: str | None = None,
         datetime: DateTimeType | None = None,
         limit: int | None = 10,
         offset: int | None = 0,
         **kwargs: str,
     ) -> ItemCollection:
-        search = BaseSearchPostRequest(
-            collections=collections,
-            ids=ids,
-            bbox=bbox,
-            intersects=intersects,
-            datetime=datetime,
-            limit=limit,
-        )
+        if intersects:
+            maybe_intersects = json.loads(intersects)
+        else:
+            maybe_intersects = None
+
+        if datetime:
+            if isinstance(datetime, tuple):
+                assert len(datetime) == 2
+                if datetime[0]:
+                    maybe_datetime = datetime[0].isoformat()
+                else:
+                    maybe_datetime = ".."
+                maybe_datetime += "/"
+                if datetime[1]:
+                    maybe_datetime += datetime[1].isoformat()
+                else:
+                    maybe_datetime += ".."
+            else:
+                maybe_datetime = datetime.isoformat()
+        else:
+            maybe_datetime = None
+
+        try:
+            search = BaseSearchPostRequest(
+                collections=collections,
+                ids=ids,
+                bbox=bbox,
+                intersects=maybe_intersects,
+                datetime=maybe_datetime,
+                limit=limit,
+            )
+        except ValidationError as e:
+            raise HTTPException(400, f"invalid request: {e}")
+
         return await self.search(
-            request=request, search=search, offset=offset, **kwargs
+            request=request,
+            search=search,
+            offset=offset,
+            url=str(request.url_for("Search")),
+            **kwargs,
         )
 
     async def item_collection(
         self,
         *,
         request: Request,
+        collection_id: str,
         bbox: BBox | None = None,
         datetime: DateTimeType | None = None,
         limit: int = 10,
@@ -77,19 +126,34 @@ class Client(AsyncBaseCoreClient):  # type: ignore
         **kwargs: str,
     ) -> ItemCollection:
         search = BaseSearchPostRequest(
-            bbox=bbox, datetime=datetime, limit=limit, offset=offset
+            collections=[collection_id],
+            bbox=bbox,
+            datetime=datetime,
+            limit=limit,
+            offset=offset,
         )
-        return await self.search(request=request, search=search, **kwargs)
+        return await self.search(
+            request=request,
+            search=search,
+            url=str(request.url_for("Get ItemCollection", collection_id=collection_id)),
+            **kwargs,
+        )
 
     async def post_search(
         self, search_request: BaseSearchPostRequest, *, request: Request, **kwargs: Any
     ) -> ItemCollection:
-        return await self.search(search=search_request, request=request, **kwargs)
+        return await self.search(
+            search=search_request,
+            request=request,
+            url=str(request.url_for("Search")),
+            **kwargs,
+        )
 
     async def search(
         self,
         *,
         request: Request,
+        url: str,
         search: BaseSearchPostRequest,
         **kwargs: Any,
     ) -> ItemCollection:
@@ -110,22 +174,45 @@ class Client(AsyncBaseCoreClient):  # type: ignore
         else:
             next_search = None
 
-        links = []
-        url = request.url_for("Search")
-        if next_search:
-            if request.method == "GET":
+        links = [
+            {
+                "href": str(request.url_for("Landing Page")),
+                "rel": "root",
+                "type": "application/json",
+            }
+        ]
+        if request.method == "GET":
+            links.append(
+                {
+                    "href": str(request.url),
+                    "rel": "self",
+                    "type": "application/geo+json",
+                    "method": "GET",
+                }
+            )
+            if next_search:
                 links.append(
                     {
-                        "href": str(url) + "?" + urllib.parse.urlencode(next_search),
+                        "href": url + "?" + urllib.parse.urlencode(next_search),
                         "rel": "next",
                         "type": "application/geo+json",
                         "method": "GET",
                     }
                 )
-            else:
+        else:
+            links.append(
+                {
+                    "href": str(request.url),
+                    "rel": "self",
+                    "type": "application/geo+json",
+                    "method": "POST",
+                    "body": search_dict,
+                }
+            )
+            if next_search:
                 links.append(
                     {
-                        "href": str(url),
+                        "href": url,
                         "rel": "next",
                         "type": "application/geo+json",
                         "method": "POST",
@@ -135,3 +222,35 @@ class Client(AsyncBaseCoreClient):  # type: ignore
 
         item_collection["links"] = links
         return ItemCollection(**item_collection)
+
+
+def collection_with_links(
+    collection: dict[str, Any], request: Request
+) -> dict[str, Any]:
+    collection["links"] = [
+        {
+            "href": str(request.url_for("Landing Page")),
+            "rel": "root",
+            "type": "application/json",
+        },
+        {
+            "href": str(request.url_for("Landing Page")),
+            "rel": "parent",
+            "type": "application/json",
+        },
+        {
+            "href": str(
+                request.url_for("Get Collection", collection_id=collection["id"])
+            ),
+            "rel": "self",
+            "type": "application/json",
+        },
+        {
+            "href": str(
+                request.url_for("Get ItemCollection", collection_id=collection["id"])
+            ),
+            "rel": "items",
+            "type": "application/geo+json",
+        },
+    ]
+    return collection
