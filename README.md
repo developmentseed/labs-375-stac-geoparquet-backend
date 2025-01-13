@@ -47,8 +47,6 @@ scripts/lint   # Doesn't fix things
 To validate with [stac-api-validator](https://github.com/stac-utils/stac-api-validator):
 
 ```shell
-scripts/dev
-# in a separate terminal
 scripts/validate
 ```
 
