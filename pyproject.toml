@@ -11,7 +11,7 @@ dependencies = [
     "stac-fastapi-api>=3.0.5",
     "stac-fastapi-extensions>=3.0.5",
     "stac-fastapi-types>=3.0.5",
-    "stacrs>=0.3.0",
+    "stacrs>=0.4.0",
 ]
 
 [dependency-groups]
@@ -26,9 +26,6 @@ dev = [
     "stac-api-validator>=0.6.3",
 ]
 validate = ["stac-api-validator>=0.6.3"]
-
-[tool.uv.sources]
-stacrs = { git = "https://github.com/gadomski/stacrs.git" }
 
 [tool.mypy]
 strict = true
