@@ -5,6 +5,7 @@ on:
     branches:
       - main
   pull_request:
+  workflow_dispatch:
   release:
     types: [published]
 
@@ -30,7 +31,7 @@ jobs:
     name: Deploy
     needs: [lint-and-test]
     runs-on: ubuntu-latest
-    if: github.event_name == 'release'
+    if: github.event_name == 'release' || github.event_name == 'workflow_dispatch'
   
     defaults:
       run:
@@ -69,7 +70,8 @@ jobs:
           STACK_NAME: stac-fastapi-geoparquet-labs-375
           STACK_STAGE: dev
           STACK_OWNER: labs-375
-          STACK_RELEASE: ${{ github.event.release.tag_name }}
+          # STACK_RELEASE: ${{ github.event.release.tag_name }}
+          STACK_RELEASE: ${{ github.ref_name }}
           STACK_BUCKET_NAME: stac-fastapi-geoparquet-devseed
           STACK_GEOPARQUET_KEY: naip.parquet
           STACK_RATE_LIMIT: 10
