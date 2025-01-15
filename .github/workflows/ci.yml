@@ -30,6 +30,9 @@ jobs:
   deploy:
     name: Deploy
     needs: [lint-and-test]
+    permissions:
+      id-token: write
+      contents: read
     runs-on: ubuntu-latest
     if: github.event_name == 'release' || github.event_name == 'workflow_dispatch'
   
