@@ -4,7 +4,7 @@ set -e
 
 
 if [ "$1" == "--dev" ]; then
-    uv sync --all-groups
+    uv sync --all-groups --all-extras
     yarn install
 else
     uv sync --no-dev
