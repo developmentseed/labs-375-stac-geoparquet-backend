@@ -24,9 +24,8 @@ from aws_cdk import (
 )
 from aws_cdk.aws_apigatewayv2 import HttpApi, HttpStage, ThrottleSettings
 from aws_cdk.aws_apigatewayv2_integrations import HttpLambdaIntegration
+from config import Config
 from constructs import Construct
-
-from .config import Config
 
 
 class StacFastApiGeoparquetStack(Stack):

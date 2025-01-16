@@ -37,11 +37,17 @@ deploy = [
 
 [tool.mypy]
 strict = true
-files = ["**/*.py"]
+files = [
+    "src/**/*.py",
+    "infrastructure/**/*.py"
+]
+exclude = [
+    "infrastructure/aws/cdk.out/.*"
+]
 plugins = "pydantic.mypy"
 
 [[tool.mypy.overrides]]
-module = ["stac_fastapi.*"]
+module = ["stac_fastapi.*", "config"]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]

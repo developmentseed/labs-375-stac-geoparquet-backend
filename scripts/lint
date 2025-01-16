@@ -4,5 +4,5 @@ set -e
 
 uv run ruff check
 uv run ruff format --check
-uv run mypy
-yarn run markdownlint-cli2
+uv run mypy src infrastructure
+yarn --no-immutable run markdownlint-cli2

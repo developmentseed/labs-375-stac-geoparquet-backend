@@ -2,6 +2,7 @@
 
 from typing import Annotated, Optional
 
+from pydantic import field_validator
 from pydantic_settings import BaseSettings
 
 
@@ -16,8 +17,8 @@ class Config(BaseSettings):
 
     bucket_name: str = "stac-fastapi-geoparquet"
     geoparquet_key: Annotated[
-        str, "storage key for the geoparquet file within the S3 bucket"
-    ]
+        Optional[str], "storage key for the geoparquet file within the S3 bucket"
+    ] = None
 
     timeout: int = 30
     memory: int = 3009
@@ -31,6 +32,12 @@ class Config(BaseSettings):
         Optional[int],
         "maximum average requests per second over an extended period of time",
     ] = 10
+
+    @field_validator("geoparquet_key")
+    def validate_geoparquet_key(cls, v: str | None) -> str:
+        if v is None:
+            raise ValueError("geoparquet_key must be provided")
+        return v
 
     @property
     def stack_name(self) -> str:
