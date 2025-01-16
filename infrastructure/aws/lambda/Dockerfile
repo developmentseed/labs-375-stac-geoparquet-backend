@@ -13,7 +13,7 @@ COPY pyproject.toml pyproject.toml
 COPY README.md README.md
 COPY src/stac_fastapi/ src/stac_fastapi/
 
-RUN uv pip install --compile-bytecode .[lambda] --target /asset --no-binary pydantic
+RUN uv pip install --compile-bytecode .[lambda] --target /asset 
 
 # Reduce package size and remove useless files
 WORKDIR /asset
@@ -26,6 +26,3 @@ RUN find . -type d -a -name 'tests' -print0 | xargs -0 rm -rf
 RUN find . -type f -name '*.so*' -exec strip --strip-unneeded {} \;
 
 COPY infrastructure/aws/lambda/handler.py /asset/handler.py
-
-CMD ["echo", "hello world"]
-
