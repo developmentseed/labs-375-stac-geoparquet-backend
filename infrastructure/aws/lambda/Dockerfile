@@ -21,12 +21,9 @@ RUN find . -type f -name '*.pyc' | while read f; do n=$(echo $f | sed 's/__pycac
 RUN find . -type d -a -name '__pycache__' -print0 | xargs -0 rm -rf
 RUN find . -type f -a -name '*.py' -print0 | xargs -0 rm -f
 RUN find . -type d -a -name 'tests' -print0 | xargs -0 rm -rf
-RUN rm -rdf /asset/numpy/doc/ /asset/boto3* /asset/botocore* /asset/bin /asset/geos_license /asset/Misc
 
-# Strip debug symbols from compiled C/C++ code (except for numpy.libs!)
-RUN find . -type f -name '*.so*' \
-  -not -path "./numpy.libs/*" \
-  -exec strip --strip-unneeded {} \;
+# Strip debug symbols from compiled C/C++ code
+RUN find . -type f -name '*.so*' -exec strip --strip-unneeded {} \;
 
 COPY infrastructure/aws/lambda/handler.py /asset/handler.py
 
