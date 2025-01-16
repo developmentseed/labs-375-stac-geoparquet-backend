@@ -1185,6 +1185,9 @@ lambda = [
 [package.dev-dependencies]
 deploy = [
     { name = "aws-cdk-lib" },
+    { name = "constructs" },
+    { name = "pydantic" },
+    { name = "pydantic-settings" },
 ]
 dev = [
     { name = "fastapi", extra = ["standard"] },
@@ -1213,7 +1216,12 @@ requires-dist = [
 ]
 
 [package.metadata.requires-dev]
-deploy = [{ name = "aws-cdk-lib", specifier = "==2.175.1" }]
+deploy = [
+    { name = "aws-cdk-lib", specifier = "==2.175.1" },
+    { name = "constructs", specifier = ">=10.4.2" },
+    { name = "pydantic", specifier = ">=2.10.4" },
+    { name = "pydantic-settings", specifier = ">=2.7.1" },
+]
 dev = [
     { name = "fastapi", extras = ["standard"], specifier = ">=0.115.6" },
     { name = "httpx", specifier = ">=0.28.1" },
