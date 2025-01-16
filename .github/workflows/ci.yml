@@ -35,6 +35,15 @@ jobs:
       contents: read
     runs-on: ubuntu-latest
     if: github.event_name == 'release' || github.event_name == 'workflow_dispatch'
+    env:
+      STACK_NAME: stac-fastapi-geoparquet-labs-375
+      STACK_STAGE: dev
+      STACK_OWNER: labs-375
+      # STACK_RELEASE: ${{ github.event.release.tag_name }}
+      STACK_RELEASE: ${{ github.ref_name }}
+      STACK_BUCKET_NAME: stac-fastapi-geoparquet-devseed
+      STACK_GEOPARQUET_KEY: naip.parquet
+      STACK_RATE_LIMIT: 10
   
     defaults:
       run:
@@ -69,15 +78,6 @@ jobs:
         run: uv run --only-group deploy npm run cdk -- synth
       
       - name: CDK Deploy
-        env:
-          STACK_NAME: stac-fastapi-geoparquet-labs-375
-          STACK_STAGE: dev
-          STACK_OWNER: labs-375
-          # STACK_RELEASE: ${{ github.event.release.tag_name }}
-          STACK_RELEASE: ${{ github.ref_name }}
-          STACK_BUCKET_NAME: stac-fastapi-geoparquet-devseed
-          STACK_GEOPARQUET_KEY: naip.parquet
-          STACK_RATE_LIMIT: 10
         run: |
           uv run --only-group deploy npm run cdk -- deploy --require-approval never
           aws s3 cp ../../data/naip.parquet s3://${STACK_BUCKET_NAME}/${STACK_GEOPARQUET_KEY}
