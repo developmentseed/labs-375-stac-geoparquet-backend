@@ -14,6 +14,11 @@ dependencies = [
     "stacrs>=0.4.0",
 ]
 
+[project.optional-dependencies]
+lambda = [
+    "mangum==0.19.0",
+]
+
 [dependency-groups]
 dev = [
     "fastapi[standard]>=0.115.6",
@@ -26,14 +31,26 @@ dev = [
     "stac-api-validator>=0.6.3",
 ]
 validate = ["stac-api-validator>=0.6.3"]
+deploy = [
+    "aws-cdk-lib==2.175.1",
+    "constructs>=10.4.2",
+    "pydantic>=2.10.4",
+    "pydantic-settings>=2.7.1",
+]
 
 [tool.mypy]
 strict = true
-files = ["**/*.py"]
+files = [
+    "src/**/*.py",
+    "infrastructure/**/*.py"
+]
+exclude = [
+    "infrastructure/aws/cdk.out/.*"
+]
 plugins = "pydantic.mypy"
 
 [[tool.mypy.overrides]]
-module = ["stac_fastapi.*"]
+module = ["stac_fastapi.*", "config"]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]

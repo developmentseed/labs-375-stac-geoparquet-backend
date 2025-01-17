@@ -172,3 +172,10 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 .vscode/
+
+# AWS deployment
+infrastructure/aws/node_modules/
+infrastructure/aws/cdk.out/
+infrastructure/aws/.env
+infrastructure/aws/cdk-outputs.json
+
