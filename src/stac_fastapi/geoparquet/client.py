@@ -1,10 +1,11 @@
 import copy
 import json
 import urllib.parse
-from typing import Any
+from typing import Any, cast
 
 from fastapi import HTTPException
 from pydantic import ValidationError
+from stacrs import DuckdbClient
 from starlette.requests import Request
 
 from stac_fastapi.api.models import BaseSearchPostRequest
@@ -18,9 +19,10 @@ class Client(AsyncBaseCoreClient):  # type: ignore
     """A stac-fastapi-geoparquet client."""
 
     async def all_collections(self, *, request: Request, **kwargs: Any) -> Collections:
+        collections = cast(dict[str, dict[str, Any]], request.state.collections)
         return Collections(
             collections=[
-                collection_with_links(c, request) for c in request.app.state.collections
+                collection_with_links(c, request) for c in collections.values()
             ],
             links=[
                 {
@@ -39,9 +41,8 @@ class Client(AsyncBaseCoreClient):  # type: ignore
     async def get_collection(
         self, *, request: Request, collection_id: str, **kwargs: Any
     ) -> Collection:
-        if collection := next(
-            (c for c in request.app.state.collections if c["id"] == collection_id), None
-        ):
+        collections = cast(dict[str, dict[str, Any]], request.state.collections)
+        if collection := collections.get(collection_id):
             return collection_with_links(collection, request)
         else:
             raise NotFoundError(f"Collection does not exist: {collection_id}")
@@ -49,15 +50,20 @@ class Client(AsyncBaseCoreClient):  # type: ignore
     async def get_item(
         self, *, request: Request, item_id: str, collection_id: str, **kwargs: Any
     ) -> Item:
-        item_collection = request.app.state.client.search(
-            request.app.state.href, ids=[item_id], collections=[collection_id], **kwargs
-        )
-        if len(item_collection["features"]) == 1:
-            return Item(**item_collection["features"][0])
-        else:
-            raise NotFoundError(
-                f"Item does not exist: {item_id} in collection {collection_id}"
+        client = cast(DuckdbClient, request.state.client)
+        hrefs = cast(dict[str, str], request.state.hrefs)
+        if href := hrefs.get(collection_id):
+            item_collection = client.search(
+                href, ids=[item_id], collections=[collection_id], **kwargs
             )
+            if len(item_collection["features"]) == 1:
+                return Item(**item_collection["features"][0])
+            else:
+                raise NotFoundError(
+                    f"Item does not exist: {item_id} in collection {collection_id}"
+                )
+        else:
+            raise NotFoundError(f"Collection does not exist: {collection_id}")
 
     async def get_search(
         self,
@@ -157,10 +163,30 @@ class Client(AsyncBaseCoreClient):  # type: ignore
         search: BaseSearchPostRequest,
         **kwargs: Any,
     ) -> ItemCollection:
+        client = cast(DuckdbClient, request.state.client)
+        hrefs = cast(dict[str, str], request.state.hrefs)
+
+        hrefs_to_search = set()
+        if search.collections:
+            for collection in search.collections:
+                if href := hrefs.get(collection):
+                    hrefs_to_search.add(href)
+        else:
+            hrefs_to_search.update(hrefs.values())
+
+        if len(hrefs) > 1:
+            raise ValidationError(
+                "Cannot search multiple geoparquet files (don't know how to page)"
+            )
+        elif len(hrefs) == 0:
+            return ItemCollection()
+        else:
+            href = hrefs_to_search.pop()
+
         search_dict = search.model_dump(exclude_none=True)
         search_dict.update(**kwargs)
-        item_collection = request.app.state.client.search(
-            request.app.state.href,
+        item_collection = client.search(
+            href,
             **search_dict,
         )
         num_items = len(item_collection["features"])
