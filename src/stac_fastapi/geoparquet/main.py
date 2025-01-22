@@ -1,5 +1,6 @@
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
+from typing import Any, TypedDict
 
 from fastapi import FastAPI
 from stacrs import DuckdbClient
@@ -13,6 +14,22 @@ from .search import SearchGetRequest, SearchPostRequest
 from .settings import Settings
 
 settings = Settings()
+
+
+class State(TypedDict):
+    """Application state."""
+
+    client: DuckdbClient
+    """The DuckDB client.
+    
+    It's just an in-memory DuckDB connection with the spatial extension enabled.
+    """
+
+    collections: dict[str, dict[str, Any]]
+    """A mapping of collection id to collection."""
+
+    hrefs: dict[str, str]
+    """A mapping of collection id to geoparquet href."""
 
 
 GetSearchRequestModel = stac_fastapi.api.models.create_request_model(
@@ -30,13 +47,24 @@ PostSearchRequestModel = stac_fastapi.api.models.create_request_model(
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI) -> AsyncIterator[None]:
+async def lifespan(app: FastAPI) -> AsyncIterator[State]:
     client = DuckdbClient()
-    collections = client.get_collections(settings.stac_fastapi_geoparquet_href)
-    app.state.href = settings.stac_fastapi_geoparquet_href
-    app.state.collections = collections
-    app.state.client = client
-    yield
+    collections = dict()
+    hrefs = dict()
+    for collection in client.get_collections(settings.stac_fastapi_geoparquet_href):
+        if collection["id"] in collections:
+            raise ValueError(
+                "cannot have two items in the same collection in different geoparquet "
+                "files"
+            )
+        else:
+            collections[collection["id"]] = collection
+        hrefs[collection["id"]] = settings.stac_fastapi_geoparquet_href
+    yield {
+        "client": client,
+        "collections": collections,
+        "hrefs": hrefs,
+    }
 
 
 api = StacApi(
