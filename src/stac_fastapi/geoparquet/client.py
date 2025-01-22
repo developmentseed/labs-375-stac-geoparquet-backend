@@ -166,12 +166,22 @@ class Client(AsyncBaseCoreClient):  # type: ignore
         client = cast(DuckdbClient, request.state.client)
         hrefs = cast(dict[str, str], request.state.hrefs)
 
-        if len(hrefs) > 1:
-            raise ValueError(
-                "System mis-configured, multiple hrefs not supported (yet)"
-            )
+        hrefs_to_search = set()
+        if search.collections:
+            for collection in search.collections:
+                if href := hrefs.get(collection):
+                    hrefs_to_search.add(href)
         else:
-            href = next(iter(hrefs.values()))
+            hrefs_to_search.update(hrefs.values())
+
+        if len(hrefs) > 1:
+            raise ValidationError(
+                "Cannot search multiple geoparquet files (don't know how to page)"
+            )
+        elif len(hrefs) == 0:
+            return ItemCollection()
+        else:
+            href = hrefs_to_search.pop()
 
         search_dict = search.model_dump(exclude_none=True)
         search_dict.update(**kwargs)
