@@ -37,47 +37,36 @@ jobs:
     if: github.event_name == 'release' || github.event_name == 'workflow_dispatch'
     env:
       STACK_NAME: stac-fastapi-geoparquet-labs-375
-      STACK_STAGE: dev
+      STACK_STAGE: ${{ vars.STAGE }}
       STACK_OWNER: labs-375
       STACK_RELEASE: ${{ github.event.release.tag_name }}
       STACK_BUCKET_NAME: stac-fastapi-geoparquet-devseed
       STACK_GEOPARQUET_KEY: naip.parquet
       STACK_RATE_LIMIT: 10
-  
+    environment: development
     defaults:
       run:
         working-directory: infrastructure/aws
-
     steps:
       - uses: actions/checkout@v4
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
+      - uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: arn:aws:iam::390960605471:role/labs-375-stac-fastapi-geoparquet-github-actions 
+          role-to-assume: arn:aws:iam::390960605471:role/labs-375-stac-fastapi-geoparquet-github-actions
           role-session-name: stac-fastapi-geoparquet-deploy
           aws-region: us-east-1
-
-      - name: Set up node
-        uses: actions/setup-node@v2
+      - uses: actions/setup-node@v2
         with:
           node-version: 22
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v3
-
+      - uses: astral-sh/setup-uv@v3
       - name: Install dependencies
         run: |
           uv sync --only-group deploy
           uv run --only-group deploy npm install
-
       - name: CDK Synth
         run: uv run --only-group deploy npm run cdk -- synth
-      
       - name: CDK Deploy
         run: |
           uv run --only-group deploy npm run cdk -- deploy --require-approval never
           aws s3 cp ../../data/naip.parquet s3://${STACK_BUCKET_NAME}/${STACK_GEOPARQUET_KEY}
-          
           API_URL=$(aws cloudformation describe-stacks --stack-name ${STACK_NAME}-${STACK_STAGE} --query 'Stacks[0].Outputs[?OutputKey==`ApiURL`].OutputValue' --output text)
           echo "::notice title=API URL::${API_URL}"
