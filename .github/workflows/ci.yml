@@ -37,7 +37,7 @@ jobs:
     if: github.event_name == 'release' || github.event_name == 'workflow_dispatch'
     env:
       STACK_NAME: stac-fastapi-geoparquet-labs-375
-      STACK_STAGE: dev
+      STACK_STAGE: ${{ vars.STAGE }}
       STACK_OWNER: labs-375
       STACK_RELEASE: ${{ github.event.release.tag_name }}
       STACK_BUCKET_NAME: stac-fastapi-geoparquet-devseed
