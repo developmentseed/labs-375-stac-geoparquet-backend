@@ -1,0 +1,51 @@
+#!/usr/bin/env python3
+
+"""Create a new DRAFT release.
+
+You'll need to set up netrc authentication as described in
+https://pygithub.readthedocs.io/en/stable/examples/Authentication.html#netrc-authentication.
+"""
+
+import datetime
+
+from github import Auth, Github
+
+release_prefix = "v" + datetime.datetime.now(tz=datetime.timezone.utc).strftime(
+    r"%Y.%m.%d"
+)
+
+github = Github(auth=Auth.NetrcAuth())
+print("Logged in as", github.get_user().login)
+
+repo = github.get_repo("developmentseed/labs-375-stac-geoparquet-backend")
+release = repo.get_latest_release()
+if release.tag_name.startswith(release_prefix):
+    _, latest_release_number = release.tag_name.rsplit(".", maxsplit=1)
+    release_number = int(latest_release_number) + 1
+    if release_number >= 10:
+        raise ValueError(
+            "Too many releases today, calm the heck down (latest release: "
+            f"{release.tag_name})"
+        )
+else:
+    release_number = 0
+
+assert release_number < 10
+tag_name = release_prefix + "." + str(release_number)
+
+print("Next release:", tag_name)
+target = repo.get_branch("main").commit.sha
+print(f"Target sha (main): {target}")
+git_release = repo.create_git_tag_and_release(
+    tag=tag_name,
+    tag_message=tag_name,
+    draft=True,
+    generate_release_notes=True,
+    release_name=tag_name,
+    release_message=(
+        f"Release created via `scripts/release` by {github.get_user().login}."
+    ),
+    object=target,
+    type="commit",
+)
+print(f"Draft release created: {git_release.html_url}")

@@ -50,7 +50,21 @@ To validate with [stac-api-validator](https://github.com/stac-utils/stac-api-val
 scripts/validate
 ```
 
-## Versioning
+## Releasing and deploying
+
+Our deploys are triggered by Github releases (or by workflow dispatch, in a pinch).
+To create a release:
+
+```shell
+scripts/release
+```
+
+This will create a draft release in Github and print its url to the console.
+The release will target the current **main** branch.
+Go to the Github URL, edit the release as you see fit, then publish it to trigger a deploy.
+If you need to manually release, use the [Github releases interface](https://github.com/developmentseed/labs-375-stac-geoparquet-backend/releases) to cut one.
+
+### Versioning
 
 We use [CalVer](https://calver.org/) with the following scheme: `vYYYY.MM.DD.n`, where `n` is the release count for the day.
 If you're releasing more than ten times in a day, stop, take a breath, and come back tomorrow.

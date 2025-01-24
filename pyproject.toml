@@ -23,6 +23,7 @@ dev = [
     "fastapi[standard]>=0.115.6",
     "httpx>=0.28.1",
     "mypy>=1.14.1",
+    "pygithub>=2.5.0",
     "pystac[validation]>=1.11.0",
     "pytest>=8.3.4",
     "pytest-asyncio>=0.25.1",
