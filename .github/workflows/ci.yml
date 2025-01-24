@@ -26,6 +26,8 @@ jobs:
         run: scripts/test
       - name: Validate
         run: scripts/validate
+      - name: Build docs
+        run: uv mkdocs build --strict
 
   deploy:
     name: Deploy
