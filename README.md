@@ -50,6 +50,11 @@ To validate with [stac-api-validator](https://github.com/stac-utils/stac-api-val
 scripts/validate
 ```
 
+## Versioning
+
+We use [CalVer](https://calver.org/) with the following scheme: `vYYYY.MM.DD.n`, where `n` is the release count for the day.
+If you're releasing more than ten times in a day, stop, take a breath, and come back tomorrow.
+
 ## Core assumptions
 
 - Everything we build should either be in this repo or in an already-existing one ... we shouldn't stand up any new repos.
