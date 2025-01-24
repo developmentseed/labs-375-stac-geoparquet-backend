@@ -22,6 +22,7 @@ lambda = ["mangum==0.19.0"]
 dev = [
     "fastapi[standard]>=0.115.6",
     "httpx>=0.28.1",
+    "mkdocs-material>=9.5.50",
     "mypy>=1.14.1",
     "pygithub>=2.5.0",
     "pystac[validation]>=1.11.0",
