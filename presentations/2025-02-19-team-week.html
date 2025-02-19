@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>stac-geoparquet API backend</title>
+
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/devseed.css" />
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <h2>stac-geoparquet API backend</h2>
+          <p>Pete Gadomski</p>
+        </section>
+        <section>
+          <section>
+            <a
+              href="https://github.com/developmentseed/labs-375-stac-geoparquet-backend/"
+              >developmentseed/labs-375-stac-geoparquet-backend</a
+            >
+            <p style="font-size: x-large">
+              We're building a service to search stac-geoparquet with a STAC API
+              query.
+            </p>
+          </section>
+          <section>
+            <img
+              src="./img/geoparquet-size-chart.excalidraw.png"
+              class="r-stretch"
+            />
+
+            <table style="font-size: large">
+              <thead>
+                <tr>
+                  <th>Format</th>
+                  <th>Size</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>json</td>
+                  <td>21 MB</td>
+                </tr>
+                <tr>
+                  <td>json.gz</td>
+                  <td>614 kB</td>
+                </tr>
+                <tr>
+                  <td>parquet</td>
+                  <td>488 kB</td>
+                </tr>
+                <tr>
+                  <td>parquet (compressed)</td>
+                  <td>179 kB</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="font-size: large">1000 sentinel-2 items</p>
+          </section>
+          <section>
+            <img
+              src="./img/putting-it-together.excalidraw.png"
+              class="r-stretch"
+            />
+          </section>
+        </section>
+        <section>
+          <a href="https://a0d353yb39.execute-api.us-east-1.amazonaws.com/"
+            >it works</a
+          >
+        </section>
+        <section>
+          <section>
+            <h2>Outputs</h2>
+          </section>
+          <section>
+            <p>Blog post, comparing w/ pgstac and elasticsearch:</p>
+            <ul>
+              <li>Costs</li>
+              <li>Response time</li>
+              <li>Live examples</li>
+            </ul>
+          </section>
+          <section>
+            <p>Internal guidance (<code>developmentseed/how</code>)</p>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2>Innovations</h2>
+          </section>
+          <section>
+            <p>stac-fastapi-geoparquet</p>
+
+            <img src="./img/stac-fastapi-geoparquet.png" />
+          </section>
+          <section>
+            <p>cql2 filtering (querying) w/ DuckDB 🦆</p>
+
+            <blockquote
+              class="bluesky-embed"
+              data-bluesky-uri="at://did:plc:gok2ppnkjardwpxegutvwnbm/app.bsky.feed.post/3lifoxnzbgc2y"
+              data-bluesky-cid="bafyreie5eex6a2xx3dqm26pgatfc7rjr6dqjjbqi76y2u3tfa3q6afgibq"
+            >
+              <p lang="en">
+                Ideally in a way that doesn&#x27;t DoS the API&#x27;s, so I can
+                just run it on a long running job and get the whole things and
+                upload them to source.coop ;) And then CLI to point at a
+                STAC-GeoParquet and treat it as a server (full CQL and other
+                filters).<br /><br /><a
+                  href="https://bsky.app/profile/did:plc:gok2ppnkjardwpxegutvwnbm/post/3lifoxnzbgc2y?ref_src=embed"
+                  >[image or embed]</a
+                >
+              </p>
+              &mdash; Chris Holmes (<a
+                href="https://bsky.app/profile/did:plc:gok2ppnkjardwpxegutvwnbm?ref_src=embed"
+                >@opencholmes.bsky.social</a
+              >)
+              <a
+                href="https://bsky.app/profile/did:plc:gok2ppnkjardwpxegutvwnbm/post/3lifoxnzbgc2y?ref_src=embed"
+                >February 17, 2025 at 4:30 PM</a
+              >
+            </blockquote>
+            <script
+              async
+              src="https://embed.bsky.app/static/embed.js"
+              charset="utf-8"
+            ></script>
+          </section>
+          <section>
+            <p>stac-geoparquet sorting/partitioning</p>
+          </section>
+        </section>
+        <section>
+          <h2>Acknowledgments</h2>
+
+          <ul>
+            <li>Henry</li>
+            <li>Zac</li>
+            <li>Vincent</li>
+            <li>David</li>
+            <li>Kyle</li>
+          </ul>
+
+          <p>
+            <a href="https://github.com/developmentseed/now/issues/3739"
+              >developmentseed/now#3739</a
+            >
+          </p>
+        </section>
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+        hash: true,
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+      });
+    </script>
+  </body>
+</html>
