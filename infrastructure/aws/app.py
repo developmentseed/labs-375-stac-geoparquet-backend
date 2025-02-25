@@ -19,8 +19,9 @@ from aws_cdk import (
 )
 from aws_cdk.aws_apigatewayv2 import HttpApi, HttpStage, ThrottleSettings
 from aws_cdk.aws_apigatewayv2_integrations import HttpLambdaIntegration
+from aws_cdk.aws_ecr_assets import Platform
 from aws_cdk.aws_iam import AnyPrincipal, Effect, PolicyStatement
-from aws_cdk.aws_lambda import Code, Function, Runtime
+from aws_cdk.aws_lambda import DockerImageCode, DockerImageFunction, Runtime
 from aws_cdk.aws_logs import RetentionDays
 from aws_cdk.aws_s3 import BlockPublicAccess, Bucket
 from aws_cdk.custom_resources import (
@@ -99,24 +100,25 @@ class StacFastApiGeoparquetStack(Stack):
 
         CfnOutput(self, "BucketName", value=bucket.bucket_name)
 
-        api_lambda = Function(
+        api_lambda = DockerImageFunction(
             scope=self,
             id="lambda",
-            runtime=runtime,
-            handler="handler.handler",
             memory_size=config.memory,
             log_retention=RetentionDays.ONE_WEEK,
             timeout=Duration.seconds(config.timeout),
-            code=Code.from_docker_build(
-                path=os.path.abspath("../.."),
+            code=DockerImageCode.from_image_asset(
+                directory=os.path.abspath("../.."),
                 file="infrastructure/aws/lambda/Dockerfile",
                 build_args={
                     "PYTHON_VERSION": runtime.to_string().replace("python", ""),
                 },
+                exclude=["**/cdk.out"],
+                platform=Platform.LINUX_AMD64,
             ),
             environment={
                 "STAC_FASTAPI_GEOPARQUET_HREF": f"s3://{bucket.bucket_name}/{config.geoparquet_key}",
                 "HOME": "/tmp",  # for duckdb's home_directory
+                "TZ": "UTC",
             },
         )
 
