@@ -10,10 +10,12 @@ RUN dnf install -y findutils binutils && \
 
 WORKDIR /tmp
 COPY pyproject.toml pyproject.toml
+COPY uv.lock uv.lock
 COPY README.md README.md
 COPY src/stac_fastapi/ src/stac_fastapi/
 
-RUN uv pip install --compile-bytecode .[lambda] --target /asset 
+RUN uv export --frozen --extra lambda > requirements.txt && \
+  uv pip install install --compile-bytecode --target ${LAMBDA_TASK_ROOT} -r requirements.txt
 
 # Reduce package size and remove useless files
 WORKDIR ${LAMBDA_TASK_ROOT}
