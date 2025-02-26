@@ -50,10 +50,9 @@ class Client(AsyncBaseCoreClient):  # type: ignore
     async def get_item(
         self, *, request: Request, item_id: str, collection_id: str, **kwargs: Any
     ) -> Item:
-        client = cast(DuckdbClient, request.state.client)
         hrefs = cast(dict[str, str], request.state.hrefs)
         if href := hrefs.get(collection_id):
-            item_collection = client.search(
+            item_collection = await self.search(
                 href, ids=[item_id], collections=[collection_id], **kwargs
             )
             if len(item_collection["features"]) == 1:
@@ -189,6 +188,9 @@ class Client(AsyncBaseCoreClient):  # type: ignore
             href,
             **search_dict,
         )
+        item_collection["features"] = [
+            self.item_with_links(item, request) for item in item_collection["features"]
+        ]
         num_items = len(item_collection["features"])
         limit = int(search_dict.get("limit", None) or num_items)
         offset = int(search_dict.get("offset", None) or 0)
@@ -248,6 +250,40 @@ class Client(AsyncBaseCoreClient):  # type: ignore
 
         item_collection["links"] = links
         return ItemCollection(**item_collection)
+
+    def item_with_links(self, item: dict[str, Any], request: Request) -> dict[str, Any]:
+        links = [
+            {
+                "href": str(request.url_for("Landing Page")),
+                "rel": "root",
+                "type": "application/json",
+            },
+        ]
+        if collection_id := item.get("collection"):
+            href = str(request.url_for("Get Collection", collection_id=collection_id))
+            links.append(
+                {"href": href, "rel": "collection", "type": "application/json"}
+            )
+            links.append({"href": href, "rel": "parent", "type": "application/json"})
+            if item_id := item.get("id"):
+                links.append(
+                    {
+                        "href": str(
+                            request.url_for(
+                                "Get Item",
+                                collection_id=collection_id,
+                                item_id=item_id,
+                            )
+                        ),
+                        "rel": "self",
+                        "type": "application/geo+json",
+                    }
+                )
+        for link in item.get("links", []):
+            if link["rel"] not in ("root", "parent", "collection", "self"):
+                links.append(link)
+        item["links"] = links
+        return item
 
 
 def collection_with_links(
