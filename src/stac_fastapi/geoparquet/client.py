@@ -50,23 +50,18 @@ class Client(AsyncBaseCoreClient):  # type: ignore
     async def get_item(
         self, *, request: Request, item_id: str, collection_id: str, **kwargs: Any
     ) -> Item:
-        hrefs = cast(dict[str, str], request.state.hrefs)
-        if href := hrefs.get(collection_id):
-            item_collection = await self.search(
-                request=request,
-                href=href,
-                ids=[item_id],
-                collections=[collection_id],
-                **kwargs,
-            )
-            if len(item_collection["features"]) == 1:
-                return Item(**item_collection["features"][0])
-            else:
-                raise NotFoundError(
-                    f"Item does not exist: {item_id} in collection {collection_id}"
-                )
+        item_collection = await self.get_search(
+            request=request,
+            ids=[item_id],
+            collections=[collection_id],
+            **kwargs,
+        )
+        if len(item_collection["features"]) == 1:
+            return Item(**item_collection["features"][0])
         else:
-            raise NotFoundError(f"Collection does not exist: {collection_id}")
+            raise NotFoundError(
+                f"Item does not exist: {item_id} in collection {collection_id}"
+            )
 
     async def get_search(
         self,
