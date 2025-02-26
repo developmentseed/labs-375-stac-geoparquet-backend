@@ -1535,7 +1535,7 @@ requires-dist = [
     { name = "stac-fastapi-api", specifier = ">=5.0.2" },
     { name = "stac-fastapi-extensions", specifier = ">=5.0.2" },
     { name = "stac-fastapi-types", specifier = ">=5.0.2" },
-    { name = "stacrs", specifier = ">=0.5.7" },
+    { name = "stacrs", specifier = "==0.5.6" },
 ]
 provides-extras = ["lambda"]
 
@@ -1607,14 +1607,14 @@ wheels = [
 
 [[package]]
 name = "stacrs"
-version = "0.5.7"
+version = "0.5.6"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/58/9b/60ed2f78f24dfd3f495df7b03d4938256b27d5a2b260987b259435e74755/stacrs-0.5.7.tar.gz", hash = "sha256:e4a6187b989cd343fd8ca2e34f999d79ca95896538b795c6563ea727b6e05c69", size = 941418 }
+sdist = { url = "https://files.pythonhosted.org/packages/38/e1/5853c3f90d0364a055fcde1b70ca666e33e47c02f87dcd3e96e46a882d30/stacrs-0.5.6.tar.gz", hash = "sha256:f154340e3f754d30b29fad06f3ce2fa6112c7b2535592cc5ed7334bd6f12c155", size = 941594 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/be/a6/1689ec8f27924c112850e83946547ed383f13e5b4cb149216cbd436cb501/stacrs-0.5.7-cp311-abi3-macosx_10_12_x86_64.whl", hash = "sha256:c93c5eeaa471af3f6932f93211c675ed6d1f8d40bebb6078db1f58e2b211f278", size = 21844211 },
-    { url = "https://files.pythonhosted.org/packages/c2/24/358218093607fea64794b1c3b1e2e119f9e1a7ad0b75c0f719b3284d1d35/stacrs-0.5.7-cp311-abi3-macosx_11_0_arm64.whl", hash = "sha256:ddc10885f0ca36e525d5e6da81bf428fe2ef4886e33744f0756ca2d46b44e673", size = 20267000 },
-    { url = "https://files.pythonhosted.org/packages/3c/47/240849ccf58e98e626885755bc79abf08a8e0fa4aa157b4724a2a8f13a7d/stacrs-0.5.7-cp311-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:68aada7255c8b9a21929f7c00acf394bdaae453da3dd4095f056ecd7d1af668d", size = 20835774 },
-    { url = "https://files.pythonhosted.org/packages/20/77/e2730eacb40705a18cf59a64e8a4552823fb6abc8f8e62278c7fa3328ba3/stacrs-0.5.7-cp311-abi3-manylinux_2_28_aarch64.whl", hash = "sha256:18f73f3684de4a37b38504be43dd81234202bf99c18c7f0570dc3109b939e91c", size = 18978252 },
+    { url = "https://files.pythonhosted.org/packages/2f/03/4facd07c9d3a1f2312a20843bb278208971165a1480ef48b3e0fe1d11fbf/stacrs-0.5.6-cp311-abi3-macosx_11_0_arm64.whl", hash = "sha256:1a6958ccca957ea8b3ca20de0dd08cdd32f2d4a16c3164f1fb48e65020527195", size = 42629983 },
+    { url = "https://files.pythonhosted.org/packages/d2/a0/62e05b995de05e165cf283f10c32b7db4a402470e914fe8eb59323759cac/stacrs-0.5.6-cp311-abi3-macosx_11_0_x86_64.whl", hash = "sha256:b25307f8a605aeb0f09b27ba73e25231c400dfad8e6b339b028f8569cce3174f", size = 43442144 },
+    { url = "https://files.pythonhosted.org/packages/16/9a/dfb38c0df69fb38d4c58cf252fa1eb2427931b94dd2f9a43020384e85c65/stacrs-0.5.6-cp311-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:6f56f7a5a18bffaa7f934ad066d7742be15a29f7eb64006426f0686e6c5d6a30", size = 32682848 },
+    { url = "https://files.pythonhosted.org/packages/33/78/b85840e05184ab349d02a56651a32afcd9ee70616c77756b8cc24603d5c1/stacrs-0.5.6-cp311-abi3-manylinux_2_28_aarch64.whl", hash = "sha256:0cbc2c1ca80136fcc0082631b6a203c8b8434cafbea81e7af7b524c595d6dcf6", size = 31133078 },
 ]
 
 [[package]]
