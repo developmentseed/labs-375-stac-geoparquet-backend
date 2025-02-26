@@ -53,7 +53,11 @@ class Client(AsyncBaseCoreClient):  # type: ignore
         hrefs = cast(dict[str, str], request.state.hrefs)
         if href := hrefs.get(collection_id):
             item_collection = await self.search(
-                href, ids=[item_id], collections=[collection_id], **kwargs
+                request=request,
+                href=href,
+                ids=[item_id],
+                collections=[collection_id],
+                **kwargs,
             )
             if len(item_collection["features"]) == 1:
                 return Item(**item_collection["features"][0])
