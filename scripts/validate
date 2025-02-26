@@ -20,4 +20,4 @@ result=$?
 set -e
 
 kill $(pgrep -P $uvicorn_pid)
-exit $?
+exit $result

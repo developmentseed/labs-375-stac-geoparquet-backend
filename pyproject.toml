@@ -6,12 +6,12 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "attr>=0.3.2",
-    "fastapi>=0.115.6",
+    "fastapi>=0.115.8",
     "geojson-pydantic>=1.2.0",
     "pydantic>=2.10.4",
-    "stac-fastapi-api>=3.0.5",
-    "stac-fastapi-extensions>=3.0.5",
-    "stac-fastapi-types>=3.0.5",
+    "stac-fastapi-api>=5.0.2",
+    "stac-fastapi-extensions>=5.0.2",
+    "stac-fastapi-types>=5.0.2",
     "stacrs>=0.4.0",
 ]
 
@@ -22,22 +22,25 @@ lambda = ["mangum==0.19.0"]
 dev = [
     "fastapi[standard]>=0.115.6",
     "httpx>=0.28.1",
-    "mkdocs-material>=9.5.50",
-    "mypy>=1.14.1",
-    "pygithub>=2.5.0",
-    "pystac[validation]>=1.11.0",
+    "mkdocs-material>=9.6.5",
+    "mypy>=1.15.0",
+    "pygithub>=2.6.1",
+    "pystac[validation]>=1.12.2",
     "pytest>=8.3.4",
-    "pytest-asyncio>=0.25.1",
-    "ruff>=0.9.1",
+    "pytest-asyncio>=0.25.3",
+    "ruff>=0.9.7",
     "stac-api-validator>=0.6.3",
 ]
 validate = ["stac-api-validator>=0.6.3"]
 deploy = [
-    "aws-cdk-lib==2.175.1",
+    "aws-cdk-lib==2.181.0",
     "constructs>=10.4.2",
     "pydantic>=2.10.4",
-    "pydantic-settings>=2.7.1",
+    "pydantic-settings>=2.8.0",
 ]
+
+[tool.uv]
+default-groups = ["dev", "validate", "deploy"]
 
 [tool.mypy]
 strict = true
@@ -46,7 +49,7 @@ exclude = ["infrastructure/aws/cdk.out/.*"]
 plugins = "pydantic.mypy"
 
 [[tool.mypy.overrides]]
-module = ["stac_fastapi.*", "config"]
+module = ["stac_fastapi.*", "config", "magnum"]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]
