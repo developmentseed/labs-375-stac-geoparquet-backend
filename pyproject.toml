@@ -12,7 +12,7 @@ dependencies = [
     "stac-fastapi-api>=5.0.2",
     "stac-fastapi-extensions>=5.0.2",
     "stac-fastapi-types>=5.0.2",
-    "stacrs==0.5.6",
+    "stacrs==0.5.8rc0",
 ]
 
 [project.optional-dependencies]
