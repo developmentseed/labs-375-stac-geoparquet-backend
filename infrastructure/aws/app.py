@@ -234,7 +234,7 @@ class StacFastApiPgstacStack(Stack):
             instance_type=InstanceType(config.pgstac_db_instance_type),
             removal_policy=RemovalPolicy.DESTROY,
         )
-        PgStacApiLambda(
+        pgstac_api = PgStacApiLambda(
             self,
             "stac-api",
             api_env={
@@ -245,6 +245,9 @@ class StacFastApiPgstacStack(Stack):
             db_secret=pgstac_db.pgstac_secret,
             stac_api_domain_name=None,
         )
+        
+        assert stac_api_lambda.url
+        CfnOutput(self, "ApiURL", value=stac_api_lambda.url)     
 
 
 app = App()
