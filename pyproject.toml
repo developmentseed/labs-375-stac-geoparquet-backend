@@ -33,8 +33,9 @@ dev = [
 ]
 validate = ["stac-api-validator>=0.6.3"]
 deploy = [
-    "aws-cdk-lib==2.181.0",
-    "constructs>=10.4.2",
+    "aws-cdk-lib==2.130.0",
+    "constructs>=10.3.0",
+    "eoapi-cdk>=7.6.0",
     "pydantic>=2.10.4",
     "pydantic-settings>=2.8.0",
 ]

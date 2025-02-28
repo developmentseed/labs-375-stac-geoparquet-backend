@@ -50,6 +50,25 @@ To validate with [stac-api-validator](https://github.com/stac-utils/stac-api-val
 scripts/validate
 ```
 
+### CDK
+
+We use the AWS [Cloud Development Kit (CDK)](https://aws.amazon.com/cdk/) for Infrastructure-as-Code (IaC).
+The code is located in [infrastructure/aws](./infrastructure/aws/).
+See [Releasing and deploying](#releasing-and-deploying) for how we normally do deploys.
+
+During development, you might want to run `cdk` yourself.
+First, [install it](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html).
+Then:
+
+```shell
+source .venv/bin/activate
+cd infrastructure/aws
+cp .env.local .env
+# Make sure you're using the eoAPI sub-account
+aws sso login --profile eoapi && eval "$(aws configure export-credentials --profile eoapi --format env)" # or however you configure your AWS sessions
+cdk diff # to show any differences
+```
+
 ## Releasing and deploying
 
 Our deploys are triggered by Github releases (or by workflow dispatch, in a pinch).
