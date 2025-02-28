@@ -33,6 +33,13 @@ class Config(BaseSettings):
         "maximum average requests per second over an extended period of time",
     ] = 10
 
+    # vpc
+    nat_gateway_count: int = 4
+
+    # pgstac
+    pgstac_db_allocated_storage: int = 5
+    pgstac_db_instance_type: str = "t3.micro"
+
     @field_validator("geoparquet_key")
     def validate_geoparquet_key(cls, v: str | None) -> str:
         if v is None:
