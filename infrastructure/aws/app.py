@@ -243,10 +243,6 @@ class StacFastApiPgstacStack(Stack):
             },
             db=pgstac_db.connection_target,
             db_secret=pgstac_db.pgstac_secret,
-            vpc=vpc,
-            subnet_selection=SubnetSelection(
-                subnet_type=SubnetType.PRIVATE_WITH_EGRESS
-            ),
             stac_api_domain_name=None,
         )
 
