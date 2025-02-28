@@ -47,7 +47,9 @@ from eoapi_cdk import PgStacApiLambda, PgStacDatabase
 
 
 class VpcStack(Stack):
-    def __init__(self, scope: Construct, config: Config, id: str, **kwargs) -> None:
+    def __init__(
+        self, scope: Construct, config: Config, id: str, **kwargs: Any
+    ) -> None:
         super().__init__(scope, id=id, tags=config.tags, **kwargs)
 
         self.vpc = Vpc(
@@ -212,7 +214,7 @@ class StacFastApiPgstacStack(Stack):
         vpc: Vpc,
         id: str,
         config: Config,
-        **kwargs,
+        **kwargs: Any,
     ) -> None:
         super().__init__(
             scope,
