@@ -229,7 +229,7 @@ class StacFastApiPgstacStack(Stack):
             engine=DatabaseInstanceEngine.postgres(
                 version=PostgresEngineVersion.VER_16
             ),
-            vpc_subnets=SubnetSelection(subnet_type=(SubnetType.PRIVATE_ISOLATED)),
+            vpc_subnets=SubnetSelection(subnet_type=(SubnetType.PUBLIC)),
             allocated_storage=config.pgstac_db_allocated_storage,
             instance_type=InstanceType(config.pgstac_db_instance_type),
             removal_policy=RemovalPolicy.DESTROY,
