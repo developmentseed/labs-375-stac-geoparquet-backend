@@ -34,7 +34,7 @@ class Config(BaseSettings):
     ] = 10
 
     # vpc
-    nat_gateway_count: int = 4
+    nat_gateway_count: int = 0
 
     # pgstac
     pgstac_db_allocated_storage: int = 5
