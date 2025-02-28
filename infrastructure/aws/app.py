@@ -245,9 +245,9 @@ class StacFastApiPgstacStack(Stack):
             db_secret=pgstac_db.pgstac_secret,
             stac_api_domain_name=None,
         )
-        
-        assert stac_api_lambda.url
-        CfnOutput(self, "ApiURL", value=stac_api_lambda.url)     
+
+        assert pgstac_api.url
+        CfnOutput(self, "ApiURL", value=pgstac_api.url)
 
 
 app = App()
