@@ -3,6 +3,10 @@
 [![CI](https://github.com/developmentseed/labs-375-stac-geoparquet-backend/actions/workflows/ci.yml/badge.svg)](https://github.com/developmentseed/labs-375-stac-geoparquet-backend/actions/workflows/ci.yml)
 
 We're building a service to search [stac-geoparquet](https://github.com/stac-utils/stac-geoparquet) with a STAC API [query](https://api.stacspec.org/v1.0.0/item-search/).
+We've got two STAC API servers deployed for our experiments:
+
+- **stac-fastapi-geoparquet**: <https://4y16a90iwk.execute-api.us-west-2.amazonaws.com/>
+- **stac-fastapi-pgstac**: <https://qwwahjp1ki.execute-api.us-west-2.amazonaws.com/> (currently [broken](https://github.com/developmentseed/labs-375-stac-geoparquet-backend/issues/67))
 
 ## Usage
 
