@@ -71,7 +71,7 @@ jobs:
       - name: CDK Deploy
         id: deploy
         run: |
-          uv run --only-group deploy npm run cdk -- deploy --require-approval never
+          uv run --only-group deploy npm run cdk -- deploy --require-approval never --all
           aws s3 cp ../../data/naip.parquet s3://${STACK_BUCKET_NAME}/${STACK_GEOPARQUET_KEY}
           API_URL=$(aws cloudformation describe-stacks --stack-name ${STACK_NAME}-${STACK_STAGE} --query 'Stacks[0].Outputs[?OutputKey==`ApiURL`].OutputValue' --output text)
           echo "::notice title=API URL::${API_URL}"
