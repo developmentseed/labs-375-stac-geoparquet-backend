@@ -12,7 +12,7 @@ dependencies = [
     "stac-fastapi-api>=5.0.2",
     "stac-fastapi-extensions>=5.0.2",
     "stac-fastapi-types>=5.0.2",
-    "stacrs==0.5.8rc0",
+    "stacrs==0.5.8",
 ]
 
 [project.optional-dependencies]
@@ -20,10 +20,12 @@ lambda = ["mangum==0.19.0"]
 
 [dependency-groups]
 dev = [
+    "boto3>=1.37.4",
     "fastapi[standard]>=0.115.6",
     "httpx>=0.28.1",
     "mkdocs-material>=9.6.5",
     "mypy>=1.15.0",
+    "pgstacrs>=0.1.1",
     "pygithub>=2.6.1",
     "pystac[validation]>=1.12.2",
     "pytest>=8.3.4",

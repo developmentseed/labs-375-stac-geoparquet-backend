@@ -6,7 +6,7 @@ We're building a service to search [stac-geoparquet](https://github.com/stac-uti
 We've got two STAC API servers deployed for our experiments:
 
 - **stac-fastapi-geoparquet**: <https://4y16a90iwk.execute-api.us-west-2.amazonaws.com/>
-- **stac-fastapi-pgstac**: <https://qwwahjp1ki.execute-api.us-west-2.amazonaws.com/> (currently [broken](https://github.com/developmentseed/labs-375-stac-geoparquet-backend/issues/67))
+- **stac-fastapi-pgstac**: <https://qwwahjp1ki.execute-api.us-west-2.amazonaws.com/>
 
 ## Usage
 
@@ -72,6 +72,10 @@ cp .env.local .env
 aws sso login --profile eoapi && eval "$(aws configure export-credentials --profile eoapi --format env)" # or however you configure your AWS sessions
 cdk diff # to show any differences
 ```
+
+### pgstac
+
+The **pgstac** database's connection parameters live in the `pgstac-db > db > Secret` resource in the `stac-fastapi-geoparquet-labs-375-pgstac` CloudFormation stack.
 
 ## Releasing and deploying
 
