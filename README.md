@@ -73,6 +73,10 @@ aws sso login --profile eoapi && eval "$(aws configure export-credentials --prof
 cdk diff # to show any differences
 ```
 
+### pgstac
+
+The **pgstac** database's connection parameters live in the `pgstac-db > db > Secret` resource in the `stac-fastapi-geoparquet-labs-375-pgstac` CloudFormation stack.
+
 ## Releasing and deploying
 
 Our deploys are triggered by Github releases (or by workflow dispatch, in a pinch).
