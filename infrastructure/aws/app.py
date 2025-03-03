@@ -25,6 +25,8 @@ from aws_cdk.aws_ec2 import (
     GatewayVpcEndpointAwsService,
     InstanceType,
     InterfaceVpcEndpointAwsService,
+    Peer,
+    Port,
     SubnetConfiguration,
     SubnetSelection,
     SubnetType,
@@ -234,6 +236,9 @@ class StacFastApiPgstacStack(Stack):
             instance_type=InstanceType(config.pgstac_db_instance_type),
             removal_policy=RemovalPolicy.DESTROY,
         )
+        # allow connections from any ipv4 to pgbouncer instance security group
+        assert pgstac_db.security_group
+        pgstac_db.security_group.add_ingress_rule(Peer.any_ipv4(), Port.tcp(5432))
         pgstac_api = PgStacApiLambda(
             self,
             "stac-api",
