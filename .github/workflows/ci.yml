@@ -10,28 +10,22 @@ on:
     types: [published]
 
 jobs:
-  lint-and-test:
-    name: Lint and test
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
-      - name: Install
-        run: scripts/install --dev
-      - name: Copy env file
-        run: cp .env.local .env
+      - name: Sync
+        run: uv sync --all-extras --all-groups
       - name: Lint
         run: scripts/lint
-      - name: Test
-        run: scripts/test
-      - name: Validate
-        run: scripts/validate
       - name: Build docs
         run: uv run mkdocs build --strict
 
   deploy:
     name: Deploy
-    needs: [lint-and-test]
+    needs: [lint]
     permissions:
       id-token: write
       contents: read

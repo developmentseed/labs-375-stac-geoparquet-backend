@@ -1,8 +1,8 @@
-# stac-geoparquet API backend
+# labs 375 — stac-fastapi-geoparquet
 
 [![CI](https://github.com/developmentseed/labs-375-stac-geoparquet-backend/actions/workflows/ci.yml/badge.svg)](https://github.com/developmentseed/labs-375-stac-geoparquet-backend/actions/workflows/ci.yml)
 
-We're building a service to search [stac-geoparquet](https://github.com/stac-utils/stac-geoparquet) with a STAC API [query](https://api.stacspec.org/v1.0.0/item-search/).
+We've built a [service](https://github.com/stac-utils/stac-fastapi-geoparquet) to search [stac-geoparquet](https://github.com/stac-utils/stac-geoparquet) with a STAC API [query](https://api.stacspec.org/v1.0.0/item-search/).
 We've got two STAC API servers deployed for our experiments:
 
 - **stac-fastapi-geoparquet**: <https://4y16a90iwk.execute-api.us-west-2.amazonaws.com/>
@@ -15,44 +15,11 @@ Get [uv](https://docs.astral.sh/uv/getting-started/installation/), then:
 ```shell
 git clone git@github.com:developmentseed/labs-375-stac-geoparquet-backend.git
 cd labs-375-stac-geoparquet-backend
-scripts/install
-cp .env.local .env
+uv sync --all-groups
 ```
 
-Then:
-
-```shell
-scripts/dev
-```
-
-This will start the **stac-fastapi-geoparquet** server on <http://127.0.0.1:8000/>.
-
-## Developing
-
-Get [yarn](https://yarnpkg.com/getting-started/install), then:
-
-```shell
-scripts/install --dev
-```
-
-Run the test suite:
-
-```shell
-scripts/test
-```
-
-To format or lint:
-
-```shell
-scripts/format # Fixes things
-scripts/lint   # Doesn't fix things
-```
-
-To validate with [stac-api-validator](https://github.com/stac-utils/stac-api-validator):
-
-```shell
-scripts/validate
-```
+Our "katas" live in [docs/katas](./docs/katas).
+These are notebooks that exercise **stac-fastapi-geoparquet** and **stac-fastapi-pgstac** and report performance metrics.
 
 ### CDK
 
@@ -98,7 +65,6 @@ If you're releasing more than ten times in a day, stop, take a breath, and come 
 
 ## Core assumptions
 
-- Everything we build should either be in this repo or in an already-existing one ... we shouldn't stand up any new repos.
 - We want to be public-by-default (with appropriate throttling) with all of our services.
   We want to show this off to the world, not keep it secret.
 - We'd like to use [stac-rs](https://github.com/stac-utils/stac-rs) and its Python friend, [stacrs](https://github.com/gadomski/stacrs), as much as possible.

@@ -3,7 +3,6 @@
 import logging
 
 from mangum import Mangum
-
 from stac_fastapi.geoparquet.main import app
 
 logging.getLogger("mangum.lifespan").setLevel(logging.ERROR)
