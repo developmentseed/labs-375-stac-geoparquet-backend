@@ -23,6 +23,7 @@ dev = [
     "mkdocs-jupyter>=0.25.1",
     "mkdocs-material>=9.6.7",
     "mypy>=1.15.0",
+    "pygithub>=2.6.1",
     "ruff>=0.9.10",
 ]
 katas = ["ipykernel>=6.29.5", "pystac-client>=0.8.5"]
