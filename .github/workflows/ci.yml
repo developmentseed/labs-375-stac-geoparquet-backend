@@ -16,8 +16,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
-      - name: Sync
+      - name: Sync uv
         run: uv sync --all-extras --all-groups
+      - name: Install yarn deps
+        run: yarn install
       - name: Lint
         run: scripts/lint
       - name: Build docs
