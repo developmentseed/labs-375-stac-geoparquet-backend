@@ -19,7 +19,12 @@ deploy = [
     "pydantic>=2.10.4",
     "pydantic-settings>=2.8.0",
 ]
-dev = ["mypy>=1.15.0", "ruff>=0.9.10"]
+dev = [
+    "mkdocs-jupyter>=0.25.1",
+    "mkdocs-material>=9.6.7",
+    "mypy>=1.15.0",
+    "ruff>=0.9.10",
+]
 katas = ["ipykernel>=6.29.5", "pystac-client>=0.8.5"]
 
 [tool.mypy]
