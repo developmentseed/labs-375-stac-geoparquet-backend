@@ -5,6 +5,9 @@ site_author: Pete Gadomski
 
 theme:
   name: material
+  features:
+    - navigation.indexes
+    - navigation.footer
   logo: assets/logo_no_text.png
   palette:
     - media: "(prefers-color-scheme)"
@@ -27,6 +30,16 @@ theme:
   font:
     text: Roboto
     code: Roboto Mono
+
+nav:
+  - index.md
+  - planning.md
+  - katas:
+      - katas/index.md
+      - katas/0_full_scan.ipynb
+
+plugins:
+  - mkdocs-jupyter
 
 extra_css:
   - overrides/stylesheets/extra.css

@@ -1,1 +1,1 @@
-../README.md
+# Lab 375 - stac-fastapi-geoparquet

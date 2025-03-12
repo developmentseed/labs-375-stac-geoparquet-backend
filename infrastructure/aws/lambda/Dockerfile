@@ -4,16 +4,18 @@ FROM public.ecr.aws/lambda/python:${PYTHON_VERSION}
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 # Install required utilities
-RUN dnf install -y findutils binutils && \
+RUN dnf install -y findutils binutils git && \
   dnf clean all && \
   rm -rf /var/cache/dnf
 
 WORKDIR /tmp
+COPY uv.lock uv.lock
 COPY pyproject.toml pyproject.toml
 COPY README.md README.md
-COPY src/stac_fastapi/ src/stac_fastapi/
+COPY src/ src/
 
-RUN uv pip install --compile-bytecode .[lambda] --target /asset 
+RUN uv export --frozen --extra lambda > requirements.txt && \
+  uv pip install --compile-bytecode --target ${LAMBDA_TASK_ROOT} -r requirements.txt
 
 # Reduce package size and remove useless files
 WORKDIR /asset
