@@ -9,11 +9,13 @@ RUN dnf install -y findutils binutils git && \
   rm -rf /var/cache/dnf
 
 WORKDIR /tmp
+COPY uv.lock uv.lock
 COPY pyproject.toml pyproject.toml
 COPY README.md README.md
 COPY src/ src/
 
-RUN uv pip install --compile-bytecode .[lambda] --target /asset 
+RUN uv export --frozen --extra lambda > requirements.txt && \
+  uv pip install --compile-bytecode --target ${LAMBDA_TASK_ROOT} -r requirements.txt
 
 # Reduce package size and remove useless files
 WORKDIR /asset
