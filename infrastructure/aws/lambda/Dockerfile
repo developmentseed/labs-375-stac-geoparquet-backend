@@ -14,8 +14,7 @@ COPY pyproject.toml pyproject.toml
 COPY README.md README.md
 COPY src/ src/
 
-RUN uv export --frozen --extra lambda > requirements.txt && \
-  uv pip install --compile-bytecode --target /asset -r requirements.txt
+RUN uv pip install --compile-bytecode .[lambda] --target /asset
 
 # Reduce package size and remove useless files
 WORKDIR /asset
