@@ -1,7 +1,8 @@
 ARG PYTHON_VERSION=3.12
+ARG BUILDPLATFORM=x86_64
 
-FROM ghcr.io/astral-sh/uv:0.6.6 AS uv
-FROM public.ecr.aws/lambda/python:${PYTHON_VERSION} AS builder
+FROM --platform=${BUILDPLATFORM} ghcr.io/astral-sh/uv:0.6.6 AS uv
+FROM --platform=${BUILDPLATFORM} public.ecr.aws/lambda/python:${PYTHON_VERSION} AS builder
 
 ENV UV_COMPILE_BYTECODE=1
 ENV UV_NO_INSTALLER_METADATA=1
@@ -29,7 +30,7 @@ RUN find . -type f -a -name '*.py' -print0 | xargs -0 rm -f
 RUN find . -type d -a -name 'tests' -print0 | xargs -0 rm -rf
 RUN find . -type f -name '*.so*' -exec strip --strip-unneeded {} \;
 
-FROM public.ecr.aws/lambda/python:${PYTHON_VERSION}
+FROM --platform=${BUILDPLATFORM} public.ecr.aws/lambda/python:${PYTHON_VERSION}
 WORKDIR /asset
 COPY --from=builder /asset /asset
 COPY infrastructure/aws/lambda/handler.py /asset/handler.py
