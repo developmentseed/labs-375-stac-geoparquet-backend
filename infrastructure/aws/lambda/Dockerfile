@@ -7,14 +7,10 @@ FROM --platform=${BUILDPLATFORM} public.ecr.aws/lambda/python:${PYTHON_VERSION} 
 ENV UV_COMPILE_BYTECODE=1
 ENV UV_NO_INSTALLER_METADATA=1
 ENV UV_LINK_MODE=copy
-ENV PATH="/root/.cargo/bin:${PATH}"
-ENV MATURIN_PEP517_ARGS="--features=duckdb-bundled"
 
-# TODO Remove rustup, gcc, and g++ when we go back to using stacrs wheels
-RUN dnf install -y findutils binutils git gcc g++ && \
+RUN dnf install -y findutils binutils git && \
   dnf clean all && \
   rm -rf /var/cache/dnf
-RUN curl https://sh.rustup.rs -sSf | bash -s -- -y 
 
 RUN --mount=from=uv,source=/uv,target=/bin/uv \
   --mount=type=cache,target=/root/.cache/uv \
