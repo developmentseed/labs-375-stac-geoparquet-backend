@@ -795,7 +795,7 @@ katas = [
 requires-dist = [
     { name = "mangum", marker = "extra == 'lambda'", specifier = "==0.19.0" },
     { name = "stac-fastapi-geoparquet", git = "https://github.com/stac-utils/stac-fastapi-geoparquet?branch=main" },
-    { name = "stacrs", specifier = ">=0.6.0b0" },
+    { name = "stacrs", git = "https://github.com/stac-utils/stacrs?branch=main" },
 ]
 provides-extras = ["lambda"]
 
@@ -1753,14 +1753,7 @@ wheels = [
 [[package]]
 name = "stacrs"
 version = "0.6.0b0"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/61/83/a2384b3386a2485210eeb12e8063a1a640684485f06ef4bd8ae640609a52/stacrs-0.6.0b0.tar.gz", hash = "sha256:d51d13d4ba490b15838c7884ace4286ac717b2ca26256b28925a2c5a63be6832", size = 605030 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/ee/17/006f8ba6698d250559d43a7d298d2fe717095c3045fb1ae43680ba2bdb97/stacrs-0.6.0b0-cp311-abi3-macosx_10_12_x86_64.whl", hash = "sha256:710ead4c3e89abc5cf8431d7a695d025b16f3ebba8b9d62c8da5e97aefce125e", size = 20988948 },
-    { url = "https://files.pythonhosted.org/packages/2d/5b/363f80a6d47015e385615e696deb52b2f32ebc614d6363d421e0207327d3/stacrs-0.6.0b0-cp311-abi3-macosx_11_0_arm64.whl", hash = "sha256:3522074061673f3743272e933487e0ce16e718aef56b4ce4d2fb0cfb032fa52a", size = 18918654 },
-    { url = "https://files.pythonhosted.org/packages/b2/a9/c35edc659ce68995c23881aad2186ca9743cd2e596211ac8db86bf237ce6/stacrs-0.6.0b0-cp311-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:ee7ac92a074b9d85ec9249874fd45a79902efc7205a44a1deb1e09a0cd6c771d", size = 22840587 },
-    { url = "https://files.pythonhosted.org/packages/4e/36/6416d63f951fade6691443313057017ed760b8a033d87f0a2c2085de8806/stacrs-0.6.0b0-cp311-abi3-manylinux_2_28_aarch64.whl", hash = "sha256:0b4752e8ab8c6c5c1b159548e7aa6a376949d0be0650f100b6a45d2583dd8995", size = 20730840 },
-]
+source = { git = "https://github.com/stac-utils/stacrs?branch=main#2c5cca89c521191a3f83c0e1e69cf5222fcdeea6" }
 
 [[package]]
 name = "starlette"

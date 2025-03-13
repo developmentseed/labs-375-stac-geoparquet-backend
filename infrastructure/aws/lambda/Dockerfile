@@ -7,10 +7,13 @@ FROM --platform=${BUILDPLATFORM} public.ecr.aws/lambda/python:${PYTHON_VERSION} 
 ENV UV_COMPILE_BYTECODE=1
 ENV UV_NO_INSTALLER_METADATA=1
 ENV UV_LINK_MODE=copy
+ENV PATH="/root/.cargo/bin:${PATH}"
+ENV MATURIN_PEP517_ARGS="--features=duckdb-bundled"
 
-RUN dnf install -y findutils binutils git && \
+RUN dnf install -y findutils binutils git gcc g++ && \
   dnf clean all && \
   rm -rf /var/cache/dnf
+RUN curl https://sh.rustup.rs -sSf | bash -s -- -y 
 
 RUN --mount=from=uv,source=/uv,target=/bin/uv \
   --mount=type=cache,target=/root/.cache/uv \
@@ -19,7 +22,7 @@ RUN --mount=from=uv,source=/uv,target=/bin/uv \
   uv export --frozen --no-emit-workspace --no-dev --no-editable --extra lambda -o requirements.txt && \
   uv pip install -r requirements.txt --target /asset
 WORKDIR /asset
-RUN python -c "from stacrs import DuckdbClient; DuckdbClient(use_s3_credential_chain=True, use_azure_credential_chain=False, install_extensions=True, extension_directory='/asset')"
+RUN python -c "from stacrs import DuckdbClient; DuckdbClient(use_s3_credential_chain=True, use_azure_credential_chain=False, install_extensions=True, extension_directory='/asset/duckdb-extensions')"
 RUN find . -type f -name '*.pyc' | while read f; do n=$(echo $f | sed 's/__pycache__\///' | sed 's/.cpython-[0-9]*//'); cp $f $n; done;
 RUN find . -type d -a -name '__pycache__' -print0 | xargs -0 rm -rf
 RUN find . -type f -a -name '*.py' -print0 | xargs -0 rm -f
