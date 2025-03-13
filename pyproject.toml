@@ -4,9 +4,7 @@ version = "0.0.0"
 description = "Test the performance of stac-fastapi-geoparquet"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = [
-    "stac-fastapi-geoparquet @ git+https://github.com/stac-utils/stac-fastapi-geoparquet",
-]
+dependencies = ["stac-fastapi-geoparquet", "stacrs"]
 
 [project.optional-dependencies]
 lambda = ["mangum==0.19.0"]
@@ -39,6 +37,10 @@ ignore_missing_imports = true
 
 [tool.ruff.lint]
 select = ["E", "F", "I"]
+
+[tool.uv.sources]
+stac-fastapi-geoparquet = { git = "https://github.com/stac-utils/stac-fastapi-geoparquet", branch = "main" }
+stacrs = { git = "https://github.com/stac-utils/stacrs", branch = "main" }
 
 [build-system]
 requires = ["setuptools"]

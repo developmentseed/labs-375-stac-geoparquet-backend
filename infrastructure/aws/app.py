@@ -174,6 +174,8 @@ class StacFastApiGeoparquetStack(Stack):
             ),
             environment={
                 "STAC_FASTAPI_GEOPARQUET_HREF": f"s3://{bucket.bucket_name}/{config.geoparquet_key}",
+                # find pre-fetched extensions
+                "STAC_FASTAPI_DUCKDB_EXTENSION_DIRECTORY": "/tmp/duckdb-extensions",
                 "HOME": "/tmp",  # for duckdb's home_directory
             },
         )

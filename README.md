@@ -33,8 +33,8 @@ Then:
 
 ```shell
 source .venv/bin/activate
-cp .env.local .env
 cd infrastructure/aws
+cp .env.local .env
 # Make sure you're using the eoAPI sub-account
 aws sso login --profile eoapi && eval "$(aws configure export-credentials --profile eoapi --format env)" # or however you configure your AWS sessions
 cdk diff # to show any differences
