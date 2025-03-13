@@ -19,7 +19,7 @@ RUN --mount=from=uv,source=/uv,target=/bin/uv \
   --mount=type=cache,target=/root/.cache/uv \
   --mount=type=bind,source=uv.lock,target=uv.lock \
   --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
-  uv export --frozen --no-emit-workspace --no-dev --no-editable -o requirements.txt && \
+  uv export --frozen --no-emit-workspace --no-dev --no-editable --extra lambda -o requirements.txt && \
   uv pip install -r requirements.txt --target /asset
 WORKDIR /asset
 RUN python -c "from stacrs import DuckdbClient; DuckdbClient(use_s3_credential_chain=True, use_azure_credential_chain=False, install_extensions=True, extension_directory='/asset')"
