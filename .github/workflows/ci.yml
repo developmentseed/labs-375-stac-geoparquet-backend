@@ -10,7 +10,7 @@ on:
     types: [published]
 
 env:
-  duckdb-version: "1.2.0"
+  duckdb-version: "1.2.2"
 
 jobs:
   lint:
