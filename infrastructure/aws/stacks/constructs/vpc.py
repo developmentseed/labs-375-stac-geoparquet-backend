@@ -48,9 +48,9 @@ class Vpc(Construct):
         )
         self.vpc.add_gateway_endpoint("S3", service=GatewayVpcEndpointAwsService.S3)
 
-        scope.export_value(
+        scope.export_value(  # type: ignore
             self.vpc.select_subnets(subnet_type=SubnetType.PUBLIC).subnets[0].subnet_id
         )
-        scope.export_value(
+        scope.export_value(  # type: ignore
             self.vpc.select_subnets(subnet_type=SubnetType.PUBLIC).subnets[1].subnet_id
         )
