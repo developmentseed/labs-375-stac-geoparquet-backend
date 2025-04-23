@@ -174,8 +174,7 @@ cython_debug/
 .vscode/
 
 # AWS deployment
-infrastructure/aws/node_modules/
-infrastructure/aws/cdk.out/
-infrastructure/aws/.env
-infrastructure/aws/cdk-outputs.json
-infrastructure/aws/cdk.context.json
+node_modules/
+cdk.out/
+cdk-outputs.json
+cdk.context.json

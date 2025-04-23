@@ -1,6 +1,13 @@
 {
+  "name": "labs-375-stac-geoparquet-backend",
+  "version": "0.0.0",
+  "private": true,
   "license": "MIT",
+  "scripts": {
+    "cdk": "cdk"
+  },
   "devDependencies": {
+    "aws-cdk": "^2.175.1",
     "markdownlint-cli2": "^0.17.0"
   },
   "markdownlint-cli2": {

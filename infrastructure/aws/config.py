@@ -1,4 +1,4 @@
-"""STACK Configs."""
+"""Stack configuration"""
 
 from typing import Annotated, Optional
 
@@ -9,7 +9,7 @@ from pydantic_settings import BaseSettings
 class Config(BaseSettings):
     """Application settings"""
 
-    name: str = "stac-fastapi-geoparquet"
+    name: str = "stac-fastapi-geoparquet-lab"
     stage: str = "dev"
     owner: str = "labs-375"  # Add owner field for tracking
     project: str = "stac-fastapi-geoparquet"  # Add project field for tracking
@@ -47,9 +47,13 @@ class Config(BaseSettings):
         return v
 
     @property
-    def stack_name(self) -> str:
+    def is_prod(self) -> bool:
+        """Determine if configuration applies to production."""
+        return self.stage == "prod"
+
+    def stack_name(self, name: str) -> str:
         """Generate consistent resource prefix."""
-        return f"{self.name}-{self.stage}"
+        return f"{self.name}-{self.stage}-{name}"
 
     @property
     def tags(self) -> dict[str, str]:
