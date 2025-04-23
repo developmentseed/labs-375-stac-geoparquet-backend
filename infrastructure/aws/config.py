@@ -15,7 +15,7 @@ class Config(BaseSettings):
     project: str = "stac-fastapi-geoparquet"  # Add project field for tracking
     release: str = "dev"
 
-    bucket_name: str = "stac-fastapi-geoparquet"
+    bucket_name: str = "stac-fastapi-geoparquet-devseed"
     geoparquet_key: Annotated[
         Optional[str], "storage key for the geoparquet file within the S3 bucket"
     ] = None
