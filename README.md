@@ -63,13 +63,6 @@ If you need to manually release, use the [Github releases interface](https://git
 We use [CalVer](https://calver.org/) with the following scheme: `vYYYY.MM.DD.n`, where `n` is the release count for the day.
 If you're releasing more than ten times in a day, stop, take a breath, and come back tomorrow.
 
-## Core assumptions
-
-- We want to be public-by-default (with appropriate throttling) with all of our services.
-  We want to show this off to the world, not keep it secret.
-- We'd like to use [stac-rs](https://github.com/stac-utils/stac-rs) and its Python friend, [stacrs](https://github.com/gadomski/stacrs), as much as possible.
-  This is partially a sop to @gadomski, but we think that the performance and reusability benefits of Rust will be part of what makes this project special.
-
 ## Project management
 
 We love 🌳.
