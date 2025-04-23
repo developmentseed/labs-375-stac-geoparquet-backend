@@ -50,7 +50,7 @@ jobs:
       STACK_STAGE: ${{ vars.STAGE }}
       STACK_OWNER: labs-375
       STACK_RELEASE: ${{ github.event.release.tag_name }}
-      STACK_BUCKET_NAME: stac-fastapi-geoparquet-devseed
+      STACK_BUCKET_NAME: stac-fastapi-geoparquet-lab-375
       STACK_GEOPARQUET_KEY: naip.parquet
       STACK_RATE_LIMIT: 10
     environment:

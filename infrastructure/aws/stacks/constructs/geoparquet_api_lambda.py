@@ -6,7 +6,7 @@ from aws_cdk import (
 )
 from aws_cdk.aws_apigatewayv2 import HttpApi, HttpStage, ThrottleSettings
 from aws_cdk.aws_apigatewayv2_integrations import HttpLambdaIntegration
-from aws_cdk.aws_lambda import Code, Function, Runtime
+from aws_cdk.aws_lambda import Code, Function, Handler, Runtime
 from aws_cdk.aws_logs import RetentionDays
 from config import Config
 from constructs import Construct
@@ -21,7 +21,6 @@ class GeoparquetApiLambda(Construct):
         id: str,
         config: Config,
         bucket: Bucket,
-        runtime: Runtime = Runtime.PYTHON_3_12,
         **kwargs: Any,
     ) -> None:
         super().__init__(scope, id, **kwargs)
@@ -29,17 +28,14 @@ class GeoparquetApiLambda(Construct):
         api_lambda = Function(
             scope=self,
             id="lambda",
-            runtime=runtime,
-            handler="handler.handler",
+            runtime=Runtime.FROM_IMAGE,
+            handler=Handler.FROM_IMAGE,
             memory_size=config.memory,
             log_retention=RetentionDays.ONE_WEEK,
             timeout=Duration.seconds(config.timeout),
-            code=Code.from_docker_build(
-                path=os.path.abspath("."),
+            code=Code.from_asset_image(
+                directory=os.path.abspath("."),
                 file="infrastructure/aws/lambda/Dockerfile",
-                build_args={
-                    "PYTHON_VERSION": runtime.to_string().replace("python", ""),
-                },
             ),
             environment={
                 "STAC_FASTAPI_GEOPARQUET_HREF": f"s3://{config.bucket_name}/{config.geoparquet_key}",
