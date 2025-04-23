@@ -29,6 +29,7 @@ RUN find . -type d -a -name 'tests' -print0 | xargs -0 rm -rf
 RUN find . -type f -name '*.so*' -exec strip --strip-unneeded {} \;
 
 FROM --platform=${BUILDPLATFORM} public.ecr.aws/lambda/python:${PYTHON_VERSION}
+ENV TZ=UTC
 WORKDIR ${LAMBDA_TASK_ROOT}
 COPY --from=builder /asset ${LAMBDA_TASK_ROOT}
 COPY infrastructure/aws/lambda/handler.py ${LAMBDA_TASK_ROOT}
