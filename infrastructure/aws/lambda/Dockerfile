@@ -25,13 +25,11 @@ WORKDIR /asset
 RUN python -c "from rustac import DuckdbClient; client = DuckdbClient(install_extensions=True, extension_directory='/asset/duckdb-extensions'); client.execute('CREATE SECRET (TYPE S3, PROVIDER CREDENTIAL_CHAIN)')"
 RUN find . -type f -name '*.pyc' | while read f; do n=$(echo $f | sed 's/__pycache__\///' | sed 's/.cpython-[0-9]*//'); cp $f $n; done;
 RUN find . -type d -a -name '__pycache__' -print0 | xargs -0 rm -rf
-RUN find . -type f -a -name '*.py' -print0 | xargs -0 rm -f
 RUN find . -type d -a -name 'tests' -print0 | xargs -0 rm -rf
 RUN find . -type f -name '*.so*' -exec strip --strip-unneeded {} \;
 
 FROM --platform=${BUILDPLATFORM} public.ecr.aws/lambda/python:${PYTHON_VERSION}
-WORKDIR /asset
-COPY --from=builder /asset /asset
-COPY infrastructure/aws/lambda/handler.py /asset/handler.py
-
-ENTRYPOINT [ "python", "handler.py" ]
+WORKDIR ${LAMBDA_TASK_ROOT}
+COPY --from=builder /asset ${LAMBDA_TASK_ROOT}
+COPY infrastructure/aws/lambda/handler.py ${LAMBDA_TASK_ROOT}
+CMD [ "handler.handler" ]

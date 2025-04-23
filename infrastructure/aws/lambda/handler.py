@@ -1,6 +1,7 @@
 """AWS Lambda handler."""
 
 import logging
+import os
 from pathlib import Path
 
 import stac_fastapi.geoparquet.api
@@ -10,7 +11,7 @@ from rustac import DuckdbClient
 logging.getLogger("mangum.lifespan").setLevel(logging.ERROR)
 logging.getLogger("mangum.http").setLevel(logging.ERROR)
 
-extension_directory = Path("/asset/duckdb-extensions")
+extension_directory = Path(os.environ["LAMBDA_TASK_ROOT"]) / "duckdb-extensions"
 
 duckdb_client = DuckdbClient(
     install_extensions=False,
