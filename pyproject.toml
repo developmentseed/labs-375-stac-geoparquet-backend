@@ -39,7 +39,7 @@ ignore_missing_imports = true
 select = ["E", "F", "I"]
 
 [tool.uv.sources]
-stac-fastapi-geoparquet = { git = "https://github.com/stac-utils/stac-fastapi-geoparquet", rev = "57df819d2c96f0f41d60a360b143d4b47256de02" }
+stac-fastapi-geoparquet = { git = "https://github.com/stac-utils/stac-fastapi-geoparquet", rev = "b992a844f348635817e2db3500e28e4da05104f0" }
 
 [build-system]
 requires = ["setuptools"]
