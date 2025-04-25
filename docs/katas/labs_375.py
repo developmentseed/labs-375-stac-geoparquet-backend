@@ -6,8 +6,9 @@ import time
 from types import TracebackType
 from typing import Any
 
-STAC_FASTAPI_GEOPARQUET_URI = "https://4y16a90iwk.execute-api.us-west-2.amazonaws.com/"
-NAIP_GEOPARQUET_URI = "s3://stac-fastapi-geoparquet-devseed/naip.parquet"
+STAC_FASTAPI_GEOPARQUET_URI = "https://1sotk6vb0d.execute-api.us-west-2.amazonaws.com/"
+STAC_FASTAPI_PGSTAC_URI = "https://31ukqsqah7.execute-api.us-west-2.amazonaws.com/"
+NAIP_GEOPARQUET_URI = "s3://stac-fastapi-geoparquet-labs-375/naip.parquet"
 
 
 class Timer:
