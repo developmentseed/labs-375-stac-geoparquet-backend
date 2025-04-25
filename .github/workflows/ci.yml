@@ -70,12 +70,8 @@ jobs:
         with:
           node-version: 22
       - uses: astral-sh/setup-uv@v3
-      - name: Install dependencies
-        run: |
-          uv sync --only-group deploy
-          uv run --only-group deploy npm install
-      - name: CDK Synth
-        run: uv run --only-group deploy npm run cdk -- synth
+      - name: Install npm dependencies
+        run: uv run --only-group deploy npm install
       - name: CDK Deploy
         id: deploy
         run: |
