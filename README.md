@@ -5,8 +5,8 @@
 We've built a [service](https://github.com/stac-utils/stac-fastapi-geoparquet) to search [stac-geoparquet](https://github.com/stac-utils/stac-geoparquet) with a STAC API [query](https://api.stacspec.org/v1.0.0/item-search/).
 We've got two STAC API servers deployed for our experiments:
 
-- **stac-fastapi-geoparquet**: <https://4y16a90iwk.execute-api.us-west-2.amazonaws.com/>
-- **stac-fastapi-pgstac**: <https://qwwahjp1ki.execute-api.us-west-2.amazonaws.com/>
+- **stac-fastapi-geoparquet**: <https://1sotk6vb0d.execute-api.us-west-2.amazonaws.com/>
+- **stac-fastapi-pgstac**: <https://31ukqsqah7.execute-api.us-west-2.amazonaws.com/>
 
 ## Usage
 

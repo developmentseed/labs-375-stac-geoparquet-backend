@@ -11,7 +11,7 @@ lambda = ["mangum==0.19.0"]
 
 [dependency-groups]
 deploy = [
-    "aws-cdk-lib==2.130.0",
+    "aws-cdk-lib>=2.130.0",
     "constructs>=10.3.0",
     "eoapi-cdk>=8.0.2",
     "pydantic>=2.10.4",
@@ -39,7 +39,7 @@ ignore_missing_imports = true
 select = ["E", "F", "I"]
 
 [tool.uv.sources]
-stac-fastapi-geoparquet = { git = "https://github.com/stac-utils/stac-fastapi-geoparquet", rev = "b992a844f348635817e2db3500e28e4da05104f0" }
+stac-fastapi-geoparquet = { git = "https://github.com/stac-utils/stac-fastapi-geoparquet", rev = "5d8b44423bb98b875a78312646ff76fe6823076d" }
 
 [build-system]
 requires = ["setuptools"]

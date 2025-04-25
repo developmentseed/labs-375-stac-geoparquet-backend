@@ -2,7 +2,6 @@
 
 from typing import Annotated, Optional
 
-from pydantic import field_validator
 from pydantic_settings import BaseSettings
 
 
@@ -16,9 +15,7 @@ class Config(BaseSettings):
     release: str = "dev"
 
     bucket_name: str = "stac-fastapi-geoparquet-lab"
-    geoparquet_key: Annotated[
-        Optional[str], "storage key for the geoparquet file within the S3 bucket"
-    ] = None
+    collections_key: str = "collections.json"
 
     timeout: int = 30
     memory: int = 3009
@@ -39,12 +36,6 @@ class Config(BaseSettings):
     # pgstac
     pgstac_db_allocated_storage: int = 5
     pgstac_db_instance_type: str = "t3.micro"
-
-    @field_validator("geoparquet_key")
-    def validate_geoparquet_key(cls, v: str | None) -> str:
-        if v is None:
-            raise ValueError("geoparquet_key must be provided")
-        return v
 
     @property
     def is_prod(self) -> bool:

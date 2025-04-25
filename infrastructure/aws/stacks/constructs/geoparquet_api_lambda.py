@@ -38,7 +38,7 @@ class GeoparquetApiLambda(Construct):
                 file="infrastructure/aws/lambda/Dockerfile",
             ),
             environment={
-                "STAC_FASTAPI_GEOPARQUET_HREF": f"s3://{config.bucket_name}/{config.geoparquet_key}",
+                "STAC_FASTAPI_COLLECTIONS_HREF": f"s3://{config.bucket_name}/{config.collections_key}",
             },
         )
         bucket.bucket.grant_read(api_lambda)
