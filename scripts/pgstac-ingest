@@ -1,0 +1,38 @@
+#!/usr/bin/env python3
+
+import json
+import sys
+from pathlib import Path
+
+import pystac.utils
+from psycopg.types.json import Jsonb
+from pypgstac.db import PgstacDB
+from rustac import DuckdbClient
+
+data_path = Path(__file__).parents[1] / "data"
+collections_path = data_path / "collections.json"
+
+if len(sys.argv) != 2:
+    raise Exception("ERROR: invalid usage, you gotta pass the DSN in")
+
+with open(collections_path) as f:
+    collections = json.load(f)
+
+for collection in collections:
+    for asset in collection["assets"].values():
+        asset["href"] = pystac.utils.make_absolute_href(
+            asset["href"], str(collections_path)
+        )
+
+duckdb_client = DuckdbClient()
+with PgstacDB(sys.argv[1]) as db:
+    db: PgstacDB
+    for collection in collections:
+        next(db.func("upsert_collection", collection))
+        for asset in (
+            a
+            for a in collection["assets"].values()
+            if a["type"] == "application/vnd.apache.parquet"
+        ):
+            items = duckdb_client.search(asset["href"])
+            next(db.func("upsert_items", Jsonb(items)))
