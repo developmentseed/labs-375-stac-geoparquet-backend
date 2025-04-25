@@ -19,5 +19,7 @@ duckdb_client = DuckdbClient(
     extension_directory=extension_directory,
 )
 duckdb_client.execute("CREATE SECRET (TYPE S3, PROVIDER CREDENTIAL_CHAIN)")
+duckdb_client.execute("SET parquet_metadata_cache = true;")
+duckdb_client.execute("SET force_download = true;")
 api = stac_fastapi.geoparquet.api.create(duckdb_client=duckdb_client)
 handler = Mangum(api.app, lifespan="on")

@@ -30,9 +30,11 @@ dev = [
     "ruff>=0.9.10",
 ]
 katas = [
+    "duckdb>=1.2.2",
     "ipykernel>=6.29.5",
- "matplotlib>=3.10.1",
- "pystac-client>=0.8.5",
+    "matplotlib>=3.10.1",
+    "pystac-client>=0.8.5",
+    "rustac==0.7.0b3",
 ]
 
 [tool.mypy]
