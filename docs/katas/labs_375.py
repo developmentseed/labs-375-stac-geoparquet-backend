@@ -26,10 +26,11 @@ class Timer:
     ) -> None:
         pass
 
-    def report(self, items: list[dict[str, Any]]) -> None:
+    def report(self, items: list[dict[str, Any]]) -> float:
         stop = time.time()
         rate = len(items) / (stop - self._start)
         print(
             f"Retrieved {len(items)} in {(stop - self._start):0.2f}s "
             f"({rate:0.2f} items/s)"
         )
+        return stop - self._start

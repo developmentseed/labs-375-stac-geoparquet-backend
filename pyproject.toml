@@ -29,7 +29,11 @@ dev = [
     "pygithub>=2.6.1",
     "ruff>=0.9.10",
 ]
-katas = ["ipykernel>=6.29.5", "pystac-client>=0.8.5"]
+katas = [
+    "ipykernel>=6.29.5",
+ "matplotlib>=3.10.1",
+ "pystac-client>=0.8.5",
+]
 
 [tool.mypy]
 strict = true
