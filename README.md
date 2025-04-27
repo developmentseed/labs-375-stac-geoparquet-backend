@@ -1,12 +1,8 @@
 # labs 375 — stac-fastapi-geoparquet
 
-[![CI](https://github.com/developmentseed/labs-375-stac-geoparquet-backend/actions/workflows/ci.yml/badge.svg)](https://github.com/developmentseed/labs-375-stac-geoparquet-backend/actions/workflows/ci.yml)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/developmentseed/labs-375-stac-geoparquet-backend/ci.yml?style=for-the-badge)](https://github.com/developmentseed/labs-375-stac-geoparquet-backend/actions/workflows/ci.yml)
 
 We've built a [service](https://github.com/stac-utils/stac-fastapi-geoparquet) to search [stac-geoparquet](https://github.com/stac-utils/stac-geoparquet) with a STAC API [query](https://api.stacspec.org/v1.0.0/item-search/).
-We've got two STAC API servers deployed for our experiments:
-
-- **stac-fastapi-geoparquet**: <https://1sotk6vb0d.execute-api.us-west-2.amazonaws.com/>
-- **stac-fastapi-pgstac**: <https://31ukqsqah7.execute-api.us-west-2.amazonaws.com/>
 
 ## Usage
 
