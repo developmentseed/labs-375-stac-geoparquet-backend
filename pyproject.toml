@@ -34,7 +34,7 @@ katas = [
     "ipykernel>=6.29.5",
     "matplotlib>=3.10.1",
     "pystac-client>=0.8.5",
-    "rustac==0.7.0b3",
+    "rustac==0.7.0b4",
 ]
 
 [tool.mypy]
@@ -50,7 +50,7 @@ ignore_missing_imports = true
 select = ["E", "F", "I"]
 
 [tool.uv.sources]
-stac-fastapi-geoparquet = { git = "https://github.com/stac-utils/stac-fastapi-geoparquet", rev = "af3d33d5a6b822f4d298ab3bfe8b74256d745d0e" }
+stac-fastapi-geoparquet = { git = "https://github.com/stac-utils/stac-fastapi-geoparquet", rev = "db3cd711d330bda334873d2af4f0e73c00b9baf3" }
 
 [build-system]
 requires = ["setuptools"]
