@@ -62,7 +62,7 @@
     "links": [],
     "assets": {
       "data": {
-        "href": "./sentinel-2-l2a/*.parquet",
+        "href": "./sentinel-2-l2a.parquet/*.parquet",
         "type": "application/vnd.apache.parquet"
       }
     }
