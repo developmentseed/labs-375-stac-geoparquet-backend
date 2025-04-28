@@ -34,7 +34,7 @@ katas = [
     "ipykernel>=6.29.5",
     "matplotlib>=3.10.1",
     "pystac-client>=0.8.5",
-    "rustac==0.7.0b4",
+    "rustac==0.7.0b5",
 ]
 
 [tool.mypy]
