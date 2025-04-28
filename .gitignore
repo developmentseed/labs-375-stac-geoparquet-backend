@@ -178,3 +178,5 @@ node_modules/
 cdk.out/
 cdk-outputs.json
 cdk.context.json
+
+data/sentinel-2-l2a.parquet
