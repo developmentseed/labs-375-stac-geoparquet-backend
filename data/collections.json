@@ -32,5 +32,39 @@
         "type": "application/vnd.apache.parquet"
       }
     }
+  },
+  {
+    "type": "Collection",
+    "stac_version": "1.1.0",
+    "id": "sentinel-2-l2a",
+    "description": "Sentinel 2 STAC items from the Microsoft Planetary Computer, 2024 only",
+    "license": "other",
+    "extent": {
+      "spatial": {
+        "bbox": [
+          [
+            -179.99523907,
+            -82.84941944,
+            179.98892131,
+            62.57091961
+          ]
+        ]
+      },
+      "temporal": {
+        "interval": [
+          [
+            "2024-01-01T00:00:00Z",
+            "2024-12-31T23:59:59Z"
+          ]
+        ]
+      }
+    },
+    "links": [],
+    "assets": {
+      "data": {
+        "href": "./sentinel-2-l2a/*.parquet",
+        "type": "application/vnd.apache.parquet"
+      }
+    }
   }
 ]
