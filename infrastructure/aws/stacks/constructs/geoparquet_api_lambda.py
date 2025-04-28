@@ -4,8 +4,17 @@ from typing import Any
 from aws_cdk import (
     Duration,
 )
-from aws_cdk.aws_apigatewayv2 import HttpApi, HttpStage, ThrottleSettings
+from aws_cdk.aws_apigatewayv2 import (
+    DomainMappingOptions,
+    DomainName,
+    HttpApi,
+    HttpStage,
+    MappingValue,
+    ParameterMapping,
+    ThrottleSettings,
+)
 from aws_cdk.aws_apigatewayv2_integrations import HttpLambdaIntegration
+from aws_cdk.aws_certificatemanager import Certificate
 from aws_cdk.aws_lambda import Code, Function, Handler, Runtime
 from aws_cdk.aws_logs import RetentionDays
 from config import Config
@@ -42,20 +51,46 @@ class GeoparquetApiLambda(Construct):
             },
         )
         bucket.bucket.grant_read(api_lambda)
-        api = HttpApi(
+
+        self.domain_name = (
+            DomainName(
+                self,
+                "api-domain-name",
+                domain_name=config.api_custom_domain,
+                certificate=Certificate.from_certificate_arn(
+                    self,
+                    "api-cdn-certificate",
+                    certificate_arn=config.acm_certificate_arn,
+                ),
+            )
+            if config.api_custom_domain and config.acm_certificate_arn
+            else None
+        )
+
+        self.api = HttpApi(
             scope=self,
             id="api",
             default_integration=HttpLambdaIntegration(
                 "api-integration",
                 handler=api_lambda,
+                parameter_mapping=ParameterMapping().overwrite_header(
+                    "host", MappingValue.custom(self.domain_name.name)
+                )
+                if self.domain_name
+                else None,
             ),
-            default_domain_mapping=None,  # TODO: enable custom domain name
+            default_domain_mapping=DomainMappingOptions(
+                domain_name=self.domain_name,
+            )
+            if self.domain_name
+            else None,
             create_default_stage=False,  # Important: disable default stage creation
         )
-        stage = HttpStage(
+
+        self.stage = HttpStage(
             self,
             "api-stage",
-            http_api=api,
+            http_api=self.api,
             auto_deploy=True,
             stage_name="$default",
             throttle=ThrottleSettings(
@@ -65,4 +100,3 @@ class GeoparquetApiLambda(Construct):
             if config.rate_limit
             else None,
         )
-        self.url = stage.url

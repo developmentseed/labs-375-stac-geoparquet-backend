@@ -46,5 +46,25 @@ class AppStack(Stack):
         geoparquet_api = GeoparquetApiLambda(
             self, "geoparquet-api", config=config, bucket=bucket
         )
-        assert geoparquet_api.url
-        CfnOutput(self, "GeoparquetApiURL", value=geoparquet_api.url)
+
+        if geoparquet_api.domain_name:
+            CfnOutput(
+                self,
+                "ApiGatewayDomainNameTarget",
+                value=geoparquet_api.domain_name.regional_domain_name,
+                description="The target for the CNAME/ALIAS record",
+            )
+            CfnOutput(
+                self,
+                "GeoparquetApiURL",
+                value=f"https://{geoparquet_api.domain_name.name}",
+                description="The custom domain URL for the API",
+            )
+        else:
+            assert geoparquet_api.stage.url
+            CfnOutput(
+                self,
+                "GeoparquetApiURL",
+                value=geoparquet_api.stage.url,
+                description="The default stage URL for the API",
+            )

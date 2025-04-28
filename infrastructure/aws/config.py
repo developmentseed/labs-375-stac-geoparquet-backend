@@ -30,6 +30,10 @@ class Config(BaseSettings):
         "maximum average requests per second over an extended period of time",
     ] = 10
 
+    # custom domain
+    api_custom_domain: Optional[str] = None
+    acm_certificate_arn: Optional[str] = None
+
     # vpc
     nat_gateway_count: int = 0
 
