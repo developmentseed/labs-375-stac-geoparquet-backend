@@ -28,6 +28,8 @@ duckdb_client = DuckdbClient()
 with PgstacDB(sys.argv[1]) as db:
     db: PgstacDB
     for collection in collections:
+        if collection["id"] != "openaerialmap":
+            continue
         next(db.func("upsert_collection", collection))
         for asset in (
             a
