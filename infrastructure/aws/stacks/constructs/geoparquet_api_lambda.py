@@ -79,11 +79,6 @@ class GeoparquetApiLambda(Construct):
                 if self.domain_name
                 else None,
             ),
-            default_domain_mapping=DomainMappingOptions(
-                domain_name=self.domain_name,
-            )
-            if self.domain_name
-            else None,
             create_default_stage=False,  # Important: disable default stage creation
         )
 
@@ -98,5 +93,10 @@ class GeoparquetApiLambda(Construct):
                 burst_limit=config.rate_limit * 2,
             )
             if config.rate_limit
+            else None,
+            domain_mapping=DomainMappingOptions(
+                domain_name=self.domain_name,
+            )
+            if self.domain_name
             else None,
         )
