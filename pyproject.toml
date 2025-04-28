@@ -41,7 +41,7 @@ katas = [
     "planetary-computer>=1.0.0",
     "pyarrow>=20.0.0",
     "pystac-client>=0.8.5",
-    "rustac==0.7.0b5",
+    "rustac==0.7.0b6",
     "tqdm>=4.67.1",
 ]
 
@@ -58,7 +58,7 @@ ignore_missing_imports = true
 select = ["E", "F", "I"]
 
 [tool.uv.sources]
-stac-fastapi-geoparquet = { git = "https://github.com/stac-utils/stac-fastapi-geoparquet", rev = "71e79cbd31fa030c04930af59b2dc98bdb356437" }
+stac-fastapi-geoparquet = { git = "https://github.com/stac-utils/stac-fastapi-geoparquet", rev = "2ae751401d37b0d3c0d028e288db919ea5fa9149" }
 
 [build-system]
 requires = ["setuptools"]
