@@ -1285,7 +1285,7 @@ requires-dist = [
     { name = "psycopg", extras = ["pool"], specifier = ">=3.2.6" },
     { name = "pypgstac", specifier = ">=0.9.6" },
     { name = "rustac" },
-    { name = "stac-fastapi-geoparquet", git = "https://github.com/stac-utils/stac-fastapi-geoparquet?rev=2ae751401d37b0d3c0d028e288db919ea5fa9149" },
+    { name = "stac-fastapi-geoparquet", git = "https://github.com/stac-utils/stac-fastapi-geoparquet?rev=3fe12e85b11fc6de16d601a1e5f29a8b2159e9ea" },
 ]
 provides-extras = ["lambda"]
 
@@ -2827,7 +2827,7 @@ wheels = [
 [[package]]
 name = "stac-fastapi-geoparquet"
 version = "0.0.1"
-source = { git = "https://github.com/stac-utils/stac-fastapi-geoparquet?rev=2ae751401d37b0d3c0d028e288db919ea5fa9149#2ae751401d37b0d3c0d028e288db919ea5fa9149" }
+source = { git = "https://github.com/stac-utils/stac-fastapi-geoparquet?rev=3fe12e85b11fc6de16d601a1e5f29a8b2159e9ea#3fe12e85b11fc6de16d601a1e5f29a8b2159e9ea" }
 dependencies = [
     { name = "attr" },
     { name = "fastapi" },
