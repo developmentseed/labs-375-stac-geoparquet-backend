@@ -53,6 +53,8 @@ jobs:
       STACK_BUCKET_NAME: stac-fastapi-geoparquet-labs-375
       STACK_COLLECTIONS_KEY: collections.json
       STACK_RATE_LIMIT: 10
+      STACK_API_CUSTOM_DOMAIN: ${{ vars.API_CUSTOM_DOMAIN }}
+      STACK_ACM_CERTIFICATE_ARN: ${{ vars.ACM_CERTIFICATE_ARN }}
     environment:
       name: development
       url: ${{ steps.deploy.outputs.api_url }}
