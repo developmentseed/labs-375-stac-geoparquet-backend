@@ -38,7 +38,7 @@ D select * from read_parquet('s3://stac-fastapi-geoparquet-labs-375/naip.parquet
 The only missing piece was to bridge the gap between STAC and **geoparquet**.
 [Tom Augsburger](https://github.com/TomAugspurger) began work in [May 2022](https://github.com/stac-utils/stac-geoparquet/commit/8b39b72a5694ea08ec9aaeea37d53bf589969787) with an implementation that used a [GeoDataFrame](https://geopandas.org/en/stable/docs/reference/api/geopandas.GeoDataFrame.html) as an intermediate representation.
 Since then, the original [stac-geoparquet](https://github.com/stac-utils/stac-geoparquet) code has matured to be more performant and support alternative storage mechanisms, including [Delta Lake](https://delta.io/).
-In parallel, we developed [rustac](https://github.com/stac-utils/rustac-py), which includes a more intuitive **stac-geoparquet** interface and binds more directly to the underlying Rust libraries, such as [geoarrow-rs](https://github.com/geoarrow/geoarrow-rs/).
+In parallel we've added an intuitive **stac-geoparquet** interface to [rustac](https://github.com/stac-utils/rustac-py), which binds more directly to the underlying Rust libraries such as [geoarrow-rs](https://github.com/geoarrow/geoarrow-rs/).
 
 ## But does it work?
 
