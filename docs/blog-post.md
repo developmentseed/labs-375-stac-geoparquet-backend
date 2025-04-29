@@ -66,7 +66,7 @@ A database, such as **pgstac**, will usually be faster than a DuckDB query again
 
 ### The ugly
 
-At large scales (e.g. over two million items) our **stac-fastapi-geoparquet** server falls over -- the time it takes to query all of those items with DuckDB against **geoparquet** exceeded our lambda timeout.
+At large scales (e.g. over two million items) our **stac-fastapi-geoparquet** we fall over and our lambda times out when searching for a single item.
 
 ## What next?
 
