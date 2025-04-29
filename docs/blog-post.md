@@ -71,6 +71,6 @@ At large scales (e.g. over two million items) our **stac-fastapi-geoparquet** se
 ## What next?
 
 We'd like to bring these experiments into the real world to prove them out more.
-If you've got small-to-medium-sized geospatial data holdings (think thousands or tens of thousand assets), we'd love explore what we can do with (free, open-source) **stac-fastapi-geoparquet** to help you!
+If you've got small-to-medium-sized geospatial data holdings (think thousands to hundreds of thousands of assets), we'd love explore what we can do with (free, open-source) **stac-fastapi-geoparquet** to help you!
 
 To see how we ran experiments and their results, check out our [labs repository](https://github.com/developmentseed/labs-375-stac-geoparquet-backend/).
