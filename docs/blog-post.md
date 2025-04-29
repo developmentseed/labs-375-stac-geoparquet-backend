@@ -43,7 +43,7 @@ In parallel, we developed [rustac](https://github.com/stac-utils/rustac-py), whi
 ## But does it work?
 
 Microsoft's Planetary Computer showed that [stac-geoparquet can be useful for bulk STAC item queries](https://planetarycomputer.microsoft.com/docs/quickstarts/stac-geoparquet/).
-But we wondered if we could update the software stack to work with existing STAC tooling, such as [pystac-client](https://pystac-client.readthedocs.io/) or [stac-browser](https://radiantearth.github.io/stac-browser).
+But we wondered if we could adapt **stac-geoparquet** to work with existing STAC tooling, such as [pystac-client](https://pystac-client.readthedocs.io/) or [stac-browser](https://radiantearth.github.io/stac-browser).
 To do so, we built a prototype [stac-fastapi-geoparquet](https://github.com/stac-utils/stac-fastapi-geoparquet/) to put a "serverless" API layer in front of **stac-geoparquet**.
 
 ![stac-fastapi-geoparquet architecture](./img/stac-fastapi-geoparquet-architecture.excalidraw.png)
