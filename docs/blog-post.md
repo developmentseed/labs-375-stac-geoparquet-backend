@@ -66,7 +66,7 @@ A database, such as **pgstac**, will usually be faster than a DuckDB query again
 
 ### The ugly
 
-At large scales (e.g. over two million items) our **stac-fastapi-geoparquet** we fall over and our lambda times out when searching for a single item.
+At large scales (e.g. over two million items) **stac-fastapi-geoparquet** falls over — our lambda times out during a single item search.
 
 ## What next?
 
