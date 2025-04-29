@@ -3,6 +3,15 @@
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/developmentseed/labs-375-stac-geoparquet-backend/ci.yml?style=for-the-badge)](https://github.com/developmentseed/labs-375-stac-geoparquet-backend/actions/workflows/ci.yml)
 
 We've built a [service](https://github.com/stac-utils/stac-fastapi-geoparquet) to search [stac-geoparquet](https://github.com/stac-utils/stac-geoparquet) with a STAC API [query](https://api.stacspec.org/v1.0.0/item-search/).
+A development version is available at <https://stac-geoparquet.labs.eoapi.dev/>.
+
+@gadomski presented on this lab at the [2025 Cloud-Native Geospatial Conference](https://conference.cloudnativegeo.org/CNGConference2025).
+His slides are [here](https://www.gadom.ski/presentations/2025-04-30-CNG.html).
+
+> [!WARNING]
+> This project was a science experiment, and will not be actively maintained after April 2025.
+> These instructions and code will bitrot and fall out-of-date.
+> We preserve them in case they're useful to future adventurers.
 
 ## Usage
 

@@ -5,8 +5,8 @@ description = "Test the performance of stac-fastapi-geoparquet"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "stac-fastapi-geoparquet",
-    "rustac",
+    "stac-fastapi-geoparquet==0.0.2",
+    "rustac>=0.7.0",
     "pypgstac>=0.9.6",
     "psycopg[pool]>=3.2.6",
 ]
@@ -42,7 +42,6 @@ katas = [
     "planetary-computer>=1.0.0",
     "pyarrow>=20.0.0",
     "pystac-client>=0.8.5",
-    "rustac==0.7.0b6",
     "tqdm>=4.67.1",
 ]
 
@@ -57,9 +56,6 @@ ignore_missing_imports = true
 
 [tool.ruff.lint]
 select = ["E", "F", "I"]
-
-[tool.uv.sources]
-stac-fastapi-geoparquet = { git = "https://github.com/stac-utils/stac-fastapi-geoparquet", rev = "3fe12e85b11fc6de16d601a1e5f29a8b2159e9ea" }
 
 [build-system]
 requires = ["setuptools"]
