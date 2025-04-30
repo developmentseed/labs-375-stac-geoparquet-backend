@@ -91,6 +91,8 @@ items = client.search(
 )
 ```
 
+![stac-fastapi-geoparquet and rustac arch](./img/stac-fastapi-geoparquet-and-rustac-architecture.excalidraw.png)
+
 ## What's Next?
 
 We're looking to take these experiments beyond our labs and into real-world applications.
