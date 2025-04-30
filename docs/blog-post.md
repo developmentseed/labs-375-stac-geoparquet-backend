@@ -10,7 +10,7 @@ The [SpatioTemporal Asset Catalog (STAC)](https://stacspec.org) specification is
 Built on battle-tested geospatial standards and specifications such as [GeoJSON](https://geojson.org/) and [OGC API - Features](https://ogcapi.ogc.org/features/), STAC has a vast (and growing) number of [implementations](https://stacindex.org/catalogs) with single instances containing over [hundreds of millions of items](https://developers.planet.com/blog/2022/Aug/31/state-of-stac/).
 But STAC isn't just for large organizations and companies; it can be used in any system where geospatial assets need to be stored and indexed for later use by humans, machines, or interfaces.
 
-Most existing [STAC API](https://github.com/radiantearth/stac-api-spec) backends use customized instances of existing data store systems, such as [pgstac (for postgres)](https://github.com/stac-utils/pgstac) or [elaticsearch/opensearch](https://github.com/stac-utils/stac-fastapi-elasticsearch-opensearch).
+Most existing [STAC API](https://github.com/radiantearth/stac-api-spec) backends use customized instances of existing data store systems, such as [pgstac (for PostgreSQL)](https://github.com/stac-utils/pgstac) or [Elasticsearch/OpenSearch](https://github.com/stac-utils/stac-fastapi-elasticsearch-opensearch).
 Each of those backends support huge (>100 million items) instances, such as [Microsoft's Planetary Computer](https://planetarycomputer.microsoft.com/) or [AWS's Earth Search](https://earth-search.aws.element84.com/v1).
 However, because these backends are meant to scale, they can be awkward to use for smaller data holdings, and they can be expensive when deployed via a cloud provider's [off-the-shelf services](https://aws.amazon.com/rds/).
 
