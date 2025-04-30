@@ -68,9 +68,10 @@ A database, such as **pgstac**, will usually be faster than a DuckDB query again
 
 At large scales (e.g. over two million items) **stac-fastapi-geoparquet** falls over — our lambda times out during a single item search.
 
-## What next?
+## What's Next?
 
-We'd like to bring these experiments into the real world to prove them out more.
-If you've got small-to-medium-sized geospatial data holdings (think thousands to hundreds of thousands of assets), we'd love explore what we can do with (free, open-source) **stac-fastapi-geoparquet** to help you!
+We're looking to take these experiments beyond our labs and into real-world applications.
 
-To see how we ran experiments and their results, check out our [labs repository](https://github.com/developmentseed/labs-375-stac-geoparquet-backend/).
+If you're working with small- to medium-sized geospatial datasets — from thousands to a few hundred thousand assets — we’d love to explore how the free and open-source [`stac-fastapi-geoparquet`](https://github.com/stac-utils/stac-fastapi-geoparquet) can support your use case.
+
+Curious about how we ran these tests and what we found? Dive into the details in our [labs repository](https://github.com/developmentseed/labs-375-stac-geoparquet-backend/).
