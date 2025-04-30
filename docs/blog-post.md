@@ -7,7 +7,7 @@ We hope that these new technologies and tools will provide more flexibility and 
 ## What the STAC?
 
 The [SpatioTemporal Asset Catalog (STAC)](https://stacspec.org) specification is a **common language to describe geospatial information**.
-Built on battle-tested geospatial standards and specifications such as [GeoJSON](https://geojson.org/) and [OGC API - Features](https://ogcapi.ogc.org/features/), STAC has a huge (and growing) number of [implementations](https://stacindex.org/catalogs) with single instances containing over [hundreds of million items](https://developers.planet.com/blog/2022/Aug/31/state-of-stac/).
+Built on battle-tested geospatial standards and specifications such as [GeoJSON](https://geojson.org/) and [OGC API - Features](https://ogcapi.ogc.org/features/), STAC has a vast (and growing) number of [implementations](https://stacindex.org/catalogs) with single instances containing over [hundreds of millions of items](https://developers.planet.com/blog/2022/Aug/31/state-of-stac/).
 But STAC isn't just for large organizations and companies; it can be used in any system where geospatial assets need to be stored and indexed for later use by humans, machines, or interfaces.
 
 Most existing [STAC API](https://github.com/radiantearth/stac-api-spec) backends use customized instances of existing data store systems, such as [pgstac (for postgres)](https://github.com/stac-utils/pgstac) or [elaticsearch/opensearch](https://github.com/stac-utils/stac-fastapi-elasticsearch-opensearch).
