@@ -71,7 +71,25 @@ However, for **targeted lookups** (e.g., retrieving a single STAC item by ID or 
 
 **At large scales** (over approximately 2 million items), we reach the limits of our current serverless architecture. In particular, our Lambda deployment of `stac-fastapi-geoparquet` times out during single-item searches. This isn’t a fundamental limit of DuckDB or GeoParquet, but a practical boundary of compute limits in AWS Lambda. These limits highlight the need for thoughtful deployment strategies as data volumes grow.
 
-These results demonstrate the promise of analyzing metadata "at rest" using simple, efficient tooling — but also highlight where robust databases still play a key role. Cloud-native doesn't mean *no* infrastructure — it means **choosing the right infrastructure** for the job.
+These results demonstrate the promise of analyzing metadata "at rest" using simple, efficient tooling — but also highlight where robust databases or other scalable query systems still play a key role.
+Cloud-native doesn't mean _no_ infrastructure — it means **choosing the right infrastructure** for the job.
+
+### But do you need a server at all?
+
+One of the compelling stories for Cloud-Native Geospatial (Meta)data is that they can be used without a server at all.
+**rustac** can use the same STAC API search parameters (including [cql2](https://developmentseed.org/cql2-rs/)) to search the **stac-geoparquet** file directly, without going through a server at all:
+
+```python
+from rustac import DuckdbClient
+
+client = DuckdbClient()
+# Configure AWS credentials
+client.execute("CREATE SECRET (TYPE S3, PROVIDER CREDENTIAL_CHAIN)")
+items = client.search(
+    "s3://stac-fastapi-geoparquet-labs-375/naip.parquet",
+    intersects={"type": "Point", "coordinates": [-105.1019, 40.1672]},
+)
+```
 
 ## What's Next?
 
