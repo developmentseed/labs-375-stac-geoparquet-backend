@@ -2,7 +2,7 @@
 
 [Cloud-Native Geospatial](https://guide.cloudnativegeo.org/) is a collection of specifications, tools, and ideas around how **geospatial data** can be queried, visualized, and analyzed _at rest_, without heavy infrastructure.
 We're bringing the same philosophy to **geospatial metadata** via [stac-geoparquet](https://github.com/stac-utils/stac-geoparquet/blob/main/spec/stac-geoparquet-spec.md).
-We hope these new technologies and tools will provide more flexibility and efficiency in how metadata are stored and queried.
+We hope that these new technologies and tools will provide more flexibility and efficiency in storing and querying metadata.
 
 ## What the STAC?
 
