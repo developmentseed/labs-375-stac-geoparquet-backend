@@ -57,21 +57,21 @@ This architecture should be extremely affordable, since we're only utilizing lig
 To see if it worked, we ran a series of experiments where we compared **stac-fastapi-geoparquet** with a **stac-fastapi-pgstac** instance with the same data.
 These results are preliminary, but encouraging.
 
-### The good
+### Results
 
-For small- to medium-sized datasets (e.g. less than 100k items) **stac-fastapi-geoparquet** serves large pages of items faster than **stac-fastapi-pgstac**.
+Our benchmarks reveal a nuanced performance profile between [`stac-fastapi-geoparquet`](https://github.com/stac-utils/stac-fastapi-geoparquet) and [`stac-fastapi-pgstac`](https://github.com/stac-utils/stac-fastapi-pgstac), shaped by dataset size and query type.
+
+For small to **medium-sized catalogs** (under approximately 100,000 items), `stac-fastapi-geoparquet` consistently outperforms `pgstac` when returning large pages of items. This makes it a strong choice for scenarios like paginated browsing or lightweight faceted search, particularly when operating in serverless environments or on a constrained budget.
 
 ![paging speed](./img/search-page-speed.png)
 
-### The bad
-
-A database, such as **pgstac**, will usually be faster than a DuckDB query against **stac-geoparquet** when searching for one or a few items ("needle in a haystack").
+However, for **targeted lookups** (e.g., retrieving a single STAC item by ID or matching on exact attributes), traditional databases like `pgstac` still shine. Their indexing and query planning provide much faster access times for "needle-in-a-haystack" searches.
 
 ![search by attributes](./img/searc-by-attributes.png)
 
-### The ugly
+**At large scales** (over approximately 2 million items), we reach the limits of our current serverless architecture. In particular, our Lambda deployment of `stac-fastapi-geoparquet` times out during single-item searches. This isn’t a fundamental limit of DuckDB or GeoParquet, but a practical boundary of compute limits in AWS Lambda. These limits highlight the need for thoughtful deployment strategies as data volumes grow.
 
-At large scales (e.g. over two million items) **stac-fastapi-geoparquet** falls over — our lambda times out during a single item search.
+These results demonstrate the promise of analyzing metadata "at rest" using simple, efficient tooling — but also highlight where robust databases still play a key role. Cloud-native doesn't mean *no* infrastructure — it means **choosing the right infrastructure** for the job.
 
 ## What's Next?
 
