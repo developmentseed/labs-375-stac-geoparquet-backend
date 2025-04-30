@@ -12,7 +12,12 @@ But STAC isn't just for large organizations and companies; it can be used in any
 
 Most existing [STAC API](https://github.com/radiantearth/stac-api-spec) backends use customized instances of existing data store systems, such as [pgstac (for PostgreSQL)](https://github.com/stac-utils/pgstac) or [Elasticsearch/OpenSearch](https://github.com/stac-utils/stac-fastapi-elasticsearch-opensearch).
 Each of those backends support huge (>100 million items) instances, such as [Microsoft's Planetary Computer](https://planetarycomputer.microsoft.com/) or [AWS's Earth Search](https://earth-search.aws.element84.com/v1).
-However, because these backends are designed to scale, they can be awkward to use for smaller datasets. They can be expensive when deployed through a cloud provider's off-the-shelf services (https://aws.amazon.com/rds/), without even considering the cost of configuring and maintaining those backends.
+However, because these backends are designed to scale, they can be awkward to use for smaller datasets.
+They can be expensive when deployed through a cloud provider's off-the-shelf services (<https://aws.amazon.com/rds/>), without even considering the cost of configuring and maintaining those backends.
+
+> Postgres needs to be managed
+>
+> — @bitner
 
 ## Cloud-Native Geospatial Metadata
 
