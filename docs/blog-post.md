@@ -18,7 +18,7 @@ However, because these backends are designed to scale, they can be awkward to us
 
 Enter [geoparquet](https://geoparquet.org/), a geospatial-specific flavor of the powerful column-oriented data format [parquet](https://parquet.apache.org/).
 **geoparquet** is natively _queryable_, meaning that clients, such as [DuckDB](https://duckdb.org/), can search directly from a **geoparquet** file.
-In fact, DuckDB has an officially-supported [spatial extension](https://duckdb.org/docs/stable/extensions/spatial/overview.html) for doing exactly this.
+DuckDB has an officially supported [spatial extension](https://duckdb.org/docs/stable/extensions/spatial/overview.html) for doing precisely this.
 
 ```sql
 D install spatial;
