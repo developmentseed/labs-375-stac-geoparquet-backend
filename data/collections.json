@@ -100,5 +100,39 @@
         "type": "application/vnd.apache.parquet"
       }
     }
+  },
+  {
+    "type": "Collection",
+    "stac_version": "1.1.0",
+    "id": "s2-slim",
+    "description": "Slim stac-geoparquet for sentinel 2",
+    "license": "other",
+    "extent": {
+      "spatial": {
+        "bbox": [
+          [
+            -175.358837351567,
+            -79.643344,
+            177.537226999853,
+            69.891295
+          ]
+        ]
+      },
+      "temporal": {
+        "interval": [
+          [
+            "2015-07-04T00:00:00Z",
+            "2024-06-23T00:00:00Z"
+          ]
+        ]
+      }
+    },
+    "links": [],
+    "assets": {
+      "data": {
+        "href": "./s2-slim.parquet",
+        "type": "application/vnd.apache.parquet"
+      }
+    }
   }
 ]
