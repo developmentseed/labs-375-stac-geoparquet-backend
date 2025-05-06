@@ -16,7 +16,6 @@ infra_stack = InfraStack(
 AppStack(
     scope=app,
     id=config.stack_name("app"),
-    pgstac_db=infra_stack.pgstac_db,
     bucket=infra_stack.bucket,
     config=config,
 )
