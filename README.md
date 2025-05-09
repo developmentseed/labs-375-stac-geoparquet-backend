@@ -7,6 +7,7 @@ A development version is available at <https://stac-geoparquet.labs.eoapi.dev/>.
 
 @gadomski presented on this lab at the [2025 Cloud-Native Geospatial Conference](https://conference.cloudnativegeo.org/CNGConference2025).
 His slides are [here](https://www.gadom.ski/presentations/2025-04-30-CNG.html).
+The companion blog post is [here](https://developmentseed.org/blog/2025-05-07-stac-geoparquet/).
 
 > [!WARNING]
 > This project was a science experiment, and will not be actively maintained after April 2025.
