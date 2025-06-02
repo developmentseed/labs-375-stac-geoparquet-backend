@@ -134,5 +134,39 @@
         "type": "application/vnd.apache.parquet"
       }
     }
+  },
+  {
+    "type": "Collection",
+    "stac_version": "1.1.0",
+    "id": "its-live-partitioned",
+    "description": "Partitioned Landsat STAC from ITS live",
+    "license": "other",
+    "extent": {
+      "spatial": {
+        "bbox": [
+          [
+            -180,
+            -90,
+            180,
+            90
+          ]
+        ]
+      },
+      "temporal": {
+        "interval": [
+          [
+            "1984-01-01T00:00:00Z",
+            null
+          ]
+        ]
+      }
+    },
+    "links": [],
+    "assets": {
+      "data": {
+        "href": "./its-live-partitioned/**/*.parquet",
+        "type": "application/vnd.apache.parquet"
+      }
+    }
   }
 ]
