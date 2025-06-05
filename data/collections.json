@@ -138,8 +138,8 @@
   {
     "type": "Collection",
     "stac_version": "1.1.0",
-    "id": "its-live-partitioned",
-    "description": "Partitioned Landsat STAC from ITS live",
+    "id": "its-live-partitioned-sorted",
+    "description": "Partitioned and sorted Landsat STAC from ITS live",
     "license": "other",
     "extent": {
       "spatial": {
@@ -164,7 +164,7 @@
     "links": [],
     "assets": {
       "data": {
-        "href": "./its-live-partitioned/**/*.parquet",
+        "href": "./its-live-partitioned-sorted/**/*.parquet",
         "type": "application/vnd.apache.parquet"
       }
     }
